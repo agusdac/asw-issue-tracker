@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  root 'application#hello'
+  resources :issues
+  resources :users
+  root 'issues#index'
 end

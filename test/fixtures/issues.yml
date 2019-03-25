@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  type: 
+  priority: MyString
+  status: MyString
+  assignee: MyString
+  created: 2019-03-25
+
+two:
+  title: MyString
+  type: 
+  priority: MyString
+  status: MyString
+  assignee: MyString
+  created: 2019-03-25
