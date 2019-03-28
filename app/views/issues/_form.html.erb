@@ -15,6 +15,11 @@
     <%= form.label :title %>
     <%= form.text_field :title, id: :issue_title %>
   </div>
+  
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description, id: :issue_description %>
+  </div>
 
   <div class="field">
     <%= form.label :kind %>
@@ -27,18 +32,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :status %>
-    <%= form.text_field :status, id: :issue_status %>
-  </div>
-
-  <div class="field">
     <%= form.label :assignee %>
     <%= form.text_field :assignee, id: :issue_assignee %>
-  </div>
-
-  <div class="field">
-    <%= form.label :created %>
-    <%= form.date_select :created, id: :issue_created %>
   </div>
 
   <div class="actions">
