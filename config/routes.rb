@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   resource :home, only: [:show]
   resources :issues
   resources :users
-  root to: "home#show"
+  root to: "issues#index"
 end
