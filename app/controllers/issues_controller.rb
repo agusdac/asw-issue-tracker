@@ -26,7 +26,6 @@ class IssuesController < ApplicationController
   def create
     @issue = Issue.new(issue_params)
     @issue.status = "new";
-    @issue.created = DateTime.now;
     respond_to do |format|
       if @issue.save
         format.html { redirect_to @issue, notice: 'Issue was successfully created.' }

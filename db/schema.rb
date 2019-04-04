@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 20190325224833) do
     t.string "priority"
     t.string "status"
     t.string "assignee"
-    t.date "created"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
