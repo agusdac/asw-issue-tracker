@@ -7,6 +7,7 @@ class CreateIssues < ActiveRecord::Migration[5.1]
       t.string :status
       t.string :assignee
       t.date :created
+      t.string :description
 
       t.timestamps
     end

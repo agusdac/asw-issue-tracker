@@ -21,6 +21,14 @@
     <%= form.text_area :description, id: :issue_description %>
   </div>
 
+  
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.select :status, [['open'],['on hold'],['resolved'],['duplicate'],['invalid'],['wontfix'],['closed']] %>
+    #poner un boton para resolved
+  </div>
+   
+  
   <div class="field">
     <%= form.label :kind %>
     <%= form.select :kind, [['bug'],['enhancement'],['proposal'],['task']] %>

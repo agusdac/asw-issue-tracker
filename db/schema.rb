@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20190331190917) do
     t.string "status"
     t.string "assignee"
     t.date "created"
+    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
