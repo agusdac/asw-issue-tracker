@@ -1,0 +1,4 @@
+<%= form_for([@issue, @issue.comments.build]) do |f| %>
+<%= f.text_area :content%>
+<%= f.submit%>
+<% end %>

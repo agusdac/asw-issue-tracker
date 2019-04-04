@@ -11,4 +11,5 @@ class User < ActiveRecord::Base
       user.save!
     end
   end
+  has_many :comments, dependent: :destroy
 end

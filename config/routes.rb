@@ -5,7 +5,9 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:create, :destroy]
   resource :home, only: [:show]
-  resources :issues
+  resources :issues do
+    resources :comments
+  end
   resources :users
   root to: "issues#index"
 end

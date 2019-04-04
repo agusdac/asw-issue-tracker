@@ -10,6 +10,7 @@ class IssuesController < ApplicationController
   # GET /issues/1
   # GET /issues/1.json
   def show
+    @comments = Comment.where(issue_id: @issue).order("created_at ASC")
   end
 
   # GET /issues/new

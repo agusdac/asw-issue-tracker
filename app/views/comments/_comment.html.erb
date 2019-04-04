@@ -1,0 +1,11 @@
+<h3> This issue has <%= pluralize(@comments.count, "reply") %></h3>
+
+<% @comments.each do |comment|%>
+<p><b> <%= comment.user.email%> </b> 
+<em><%= time_ago_in_words(comment.created_at)%></em></p>
+<p> <%= comment.content %></p>
+<% if current_user == comment.user %>
+    <%= link_to "Edit", edit_issue_comment_path(comment.issue, comment)%>
+    <%= link_to "Delete", [comment.issue, comment], method: :delete%>
+<% end%>
+<% end %>
