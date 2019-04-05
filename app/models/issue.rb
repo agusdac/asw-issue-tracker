@@ -10,4 +10,6 @@ class Issue < ApplicationRecord
     validates_inclusion_of :kind, :in => ALL_TYPES  
     
     #belongs_to :user, foreign_key: 'assignee'
+    
+    acts_as_votable
 end

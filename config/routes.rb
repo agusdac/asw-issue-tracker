@@ -5,7 +5,15 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:create, :destroy]
   resource :home, only: [:show]
-  resources :issues
+  resources :issues do 
+    member do
+      put "like", to: "issues#upvote"
+      put "dislike", to: "issues#downvote"
+    end
+  end
+  
   resources :users
   root to: "home#show"
+  
+  
 end
