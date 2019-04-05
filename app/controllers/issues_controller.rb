@@ -1,5 +1,17 @@
 class IssuesController < ApplicationController
   before_action :set_issue, only: [:show, :edit, :update, :destroy]
+  
+  def upvote 
+    @issue = Issue.find(params[:id])
+    @issue.upvote_by current_user
+    redirect_to :issues
+  end  
+
+  def downvote
+    @issue = Issue.find(params[:id])
+    @issue.downvote_by current_user
+    redirect_to :issues
+  end
 
   # GET /issues
   # GET /issues.json
@@ -72,4 +84,6 @@ class IssuesController < ApplicationController
     def issue_params
       params.require(:issue).permit(:title, :description, :kind, :priority, :status, :assignee, :created)
     end
+    
+ 
 end
