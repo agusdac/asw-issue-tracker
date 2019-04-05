@@ -30,6 +30,14 @@
   <%= @issue.assignee %>
 </p>
 
+<% pre_vote = @issue.votes.find { |vote| vote.user_id == current_user.id} %>
+<% if pre_vote %>
+  <%= button_to 'Unvote', issue_votes_path(@issue, pre_vote), method: :delete %>
+<% else %>
+  <%= button_to 'Vote', issue_votes_path(@issue), method: :post %>
+<% end %>
+
+<p><%= @issue.votes.count %> <%= (@issue.votes.count) == 1 ? 'Vote' : 'Votes'%></p>
 
 <%= link_to 'Edit', edit_issue_path(@issue) %> |
 <%= link_to 'Back', issues_path %>

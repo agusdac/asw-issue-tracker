@@ -12,4 +12,6 @@ class User < ActiveRecord::Base
     end
   end
   has_many :comments, dependent: :destroy
+  has_many :votes, dependent: :destroy
+
 end

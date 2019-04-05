@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resource :home, only: [:show]
   resources :issues do
     resources :comments
+    resources :votes
+
   end
   resources :users
   root to: "issues#index"
