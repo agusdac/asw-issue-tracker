@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20190404174931) do
     t.string "uid"
     t.string "name"
     t.string "email"
+    t.string "imageurl"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "oauth_token"

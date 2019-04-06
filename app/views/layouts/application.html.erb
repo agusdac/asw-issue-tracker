@@ -12,7 +12,9 @@
 	<div class="sidebar">
 	  <a class="active" href="issues#show">Home</a>
 	  <% if current_user %>
-          <p>  Signed in as <strong><%= current_user.name %></strong>!</p>
+          <img class="perfil_image" src ="<%=current_user.imageurl%>">
+          <p id="perfil_name">Signed in as <strong><%= current_user.name %></p>
+          
           <%= link_to "Sign out", signout_path, id: "sign_out" %>
           <% else %>
           <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>

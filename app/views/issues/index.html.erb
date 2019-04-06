@@ -13,26 +13,13 @@
       
     </ul>
   </div>
-  <div class="issues-toolbar-right">
-    
-      <a id="advanced-search" href="/fib_was/issue_tracker_demo/issues/query">
-        Advanced search
-      </a>
-    
-    <form class="aui top-label" id="search" action="/fib_was/issue_tracker_demo/issues">
-      <div class="field-group">
-        <label for="q">Search</label>
-        <input type="text" class="text" id="q" name="q" results="5" autosave="bitbucket-issues-filter" placeholder="Find issues">
-      </div>
-    </form>
-  </div>
 </div>
 
         <h1>
           Issues
           
 
-            <span class="secondary">(1-<%= (@issues.count{ |u| [u.title] })%>)</span>
+            <span class="secondary">(<%= (@issues.count{ |u| [u.title] })%>)</span>
           
         </h1>
       </header>
@@ -70,7 +57,21 @@
 	<% if issue.kind == "task"%>
 	<td><%= image_tag("task.svg") %></td>
         <% end %>
-        <td><%= issue.priority %></td>
+	<% if issue.priority == "trivial"%>
+	<td><%= image_tag("trivial.svg") %></td>
+	<% end %>
+	<% if issue.priority == "minor"%>
+	<td><%= image_tag("minor.svg") %></td>
+	<% end %>
+	<% if issue.priority == "major"%>
+	<td><%= image_tag("major.svg") %></td>
+	<% end %>
+	<% if issue.priority == "critical"%>
+	<td><%= image_tag("critical.svg") %></td>
+	<% end %>
+	<% if issue.priority == "blocker"%>
+	<td><%= image_tag("blocker.svg") %></td>
+	<% end %>
         <td><%= issue.status %></td>
         <td><%= issue.assignee %></td>
         <td><%= time_ago_in_words(issue.created_at) + " ago" %></td>

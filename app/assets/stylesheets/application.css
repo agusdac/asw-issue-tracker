@@ -18,6 +18,16 @@
  /* The side navigation menu */
 
 
+.perfil_image {
+  border-radius: 50%;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+#perfil_name {
+  margin-top: 8px;
+  margin-left: 16px;
+}
 .body {
   margin-left: 220px;
 }
@@ -28,6 +38,14 @@
     justify-content: flex-end;
     align-items: center;
     flex-wrap: wrap;
+}
+
+.leyenda {
+ padding: 16px;   
+}
+
+.table_header {
+    margin-top: 16px;
 }
 
 .clearfix::after {
