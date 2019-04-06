@@ -24,8 +24,8 @@
   
   <div class="field">
     <%= form.label :status %>
-    <%= form.select :status, [['open'],['on hold'],['resolved'],['duplicate'],['invalid'],['wontfix'],['closed']] %>
-    #poner un boton para resolved
+    <%= form.select :status, [['open'],['on hold'],['new'],['resolved'],['duplicate'],['invalid'],['wontfix'],['closed']] %>
+    <%= form.submit 'Change status' %>
   </div>
    
   

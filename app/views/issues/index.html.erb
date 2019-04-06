@@ -2,6 +2,22 @@
 
 <h1>Issues</h1>
 
+  <div class="filter-container">
+    <p class="filter-label">Filter by:</p>
+    <ul class="filter-status">
+      <li id="all" aria-pressed="true">
+        <a href="/issues">All</a>
+      </li>
+      <li id="open">
+        <a href="/issues?status=new&amp;status=open">Open</a>
+      </li>
+      <li id="myissues">
+        <a href="/issues?user_id="+current_user.id>My issues</a>
+      </li>
+      
+    </ul>
+  </div>
+  
 <table>
   <thead>
     <tr>

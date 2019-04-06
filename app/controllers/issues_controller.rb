@@ -4,9 +4,15 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.json
   def index
-    @issues = Issue.all
+    if params[:status] == "open" or params[:status] == "new"
+      @issues = Issue.where(status: ["open", "new"])
+    elsif current_user.present? and params[:user_id] == current_user.id
+      @issues = Issue.where(user_id: current_user.id)
+    else
+      @issues = Issue.all
+    end
   end
-
+  
   # GET /issues/1
   # GET /issues/1.json
   def show
@@ -27,6 +33,7 @@ class IssuesController < ApplicationController
   def create
     @issue = Issue.new(issue_params)
     @issue.status = "new";
+    @issue.user_id = current_user.id;
     respond_to do |format|
       if @issue.save
         format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
