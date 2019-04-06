@@ -1,7 +1,12 @@
 <h3> This issue has <%= pluralize(@comments.count, "reply") %></h3>
 
 <% @comments.each do |comment|%>
-<p><b> <%= comment.user.email%> </b> 
+<% if comment.has_attribute?(:user_id) and comment.user != nil %>
+    <p><b> <%= comment.user.email%> </b> 
+<% else %>
+    <p><b> System: </b> 
+<% end %>
+
 <em><%= time_ago_in_words(comment.created_at)%></em></p>
 <p> <%= comment.content %></p>
 <% if current_user == comment.user %>
