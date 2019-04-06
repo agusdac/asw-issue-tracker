@@ -1,12 +1,13 @@
 <header>
-        <div id="issues-toolbar" class="clearfix">
+        
+<div id="issues-toolbar" class="clearfix">
   <div class="filter-container">
     <p class="filter-label">Filter by:</p>
     <ul class="filter-status">
-      <li id="all">
+      <li id="all" aria-pressed="true">
         <a href="/fib_was/issue_tracker_demo/issues">All</a>
       </li>
-      <li id="open" aria-pressed="true">
+      <li id="open">
         <a href="/fib_was/issue_tracker_demo/issues?status=new&amp;status=open">Open</a>
       </li>
       
@@ -14,7 +15,7 @@
   </div>
   <div class="issues-toolbar-right">
     
-      <a id="advanced-search" href="/fib_was/issue_tracker_demo/issues/query?status=new&amp;status=open">
+      <a id="advanced-search" href="/fib_was/issue_tracker_demo/issues/query">
         Advanced search
       </a>
     
@@ -26,6 +27,7 @@
     </form>
   </div>
 </div>
+
         <h1>
           Issues
           
@@ -38,8 +40,8 @@
 
 <p id="notice"><%= notice %></p>
 
-<table>
-  <thead>
+<table class = "table">
+  <thead class = "table_header">
     <tr>
       <th class="leyenda">Title</th>
       <th class="leyenda">Kind</th>
@@ -52,19 +54,30 @@
     </tr>
   </thead>
 
-  <tbody>
+  <tbody class = "table_body">
     <% @issues.each do |issue| %>
       <tr>
-        <td><%= issue.title %></td>
-        <td><%= issue.kind %></td>
+        <td><%= link_to issue.title, issue%></td>
+        <% if issue.kind == "bug" %>
+	<td><%= image_tag("bug.svg") %></td>
+        <% end %>
+	<% if issue.kind == "enhancement"%>
+	<td><%= image_tag("enhancement.svg") %></td>
+        <% end %>
+ 	<% if issue.kind == "proposal"%>
+	<td><%= image_tag("proposal.svg") %></td>
+        <% end %>
+	<% if issue.kind == "task"%>
+	<td><%= image_tag("task.svg") %></td>
+        <% end %>
         <td><%= issue.priority %></td>
         <td><%= issue.status %></td>
         <td><%= issue.assignee %></td>
         <td><%= time_ago_in_words(issue.created_at) + " ago" %></td>
         <td><%= time_ago_in_words(issue.updated_at) + " ago" %></td>
-        <td><%= link_to 'Show', issue %></td>
+        <!--<td><%= link_to 'Show', issue %></td>
         <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
-        <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
       </tr>
     <% end %>
   </tbody>

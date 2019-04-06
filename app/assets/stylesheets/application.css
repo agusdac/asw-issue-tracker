@@ -22,7 +22,7 @@
   margin-left: 220px;
 }
 
-#issues #issues-toolbar {
+.issues .issues-toolbar {
     width: 100%;
     display: flex;
     justify-content: flex-end;
