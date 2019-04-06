@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(version: 20190404174931) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.index ["user_id"], name: "index_issues_on_user_id"
+    t.integer "asignee_id"
+    t.index ["asignee_id"], name: "index_issues_on_asignee_id"
   end
 
   create_table "users", force: :cascade do |t|
