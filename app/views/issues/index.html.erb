@@ -1,17 +1,53 @@
-<p id="notice"><%= notice %></p>
+<header>
+        <div id="issues-toolbar" class="clearfix">
+  <div class="filter-container">
+    <p class="filter-label">Filter by:</p>
+    <ul class="filter-status">
+      <li id="all">
+        <a href="/fib_was/issue_tracker_demo/issues">All</a>
+      </li>
+      <li id="open" aria-pressed="true">
+        <a href="/fib_was/issue_tracker_demo/issues?status=new&amp;status=open">Open</a>
+      </li>
+      
+    </ul>
+  </div>
+  <div class="issues-toolbar-right">
+    
+      <a id="advanced-search" href="/fib_was/issue_tracker_demo/issues/query?status=new&amp;status=open">
+        Advanced search
+      </a>
+    
+    <form class="aui top-label" id="search" action="/fib_was/issue_tracker_demo/issues">
+      <div class="field-group">
+        <label for="q">Search</label>
+        <input type="text" class="text" id="q" name="q" results="5" autosave="bitbucket-issues-filter" placeholder="Find issues">
+      </div>
+    </form>
+  </div>
+</div>
+        <h1>
+          Issues
+          
 
-<h1>Issues</h1>
+            <span class="secondary">(1-<%= (@issues.count{ |u| [u.title] })%>)</span>
+          
+        </h1>
+      </header>
+
+
+<p id="notice"><%= notice %></p>
 
 <table>
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Kind</th>
-      <th>Priority</th>
-      <th>Status</th>
-      <th>Assignee</th>
-      <th>Created</th>
-      <th>Updated</th>
+      <th class="leyenda">Title</th>
+      <th class="leyenda">Kind</th>
+      <th class="leyenda">Priority</th>
+      <th class="leyenda">Status</th>
+      <th class="leyenda">Assignee</th>
+      <th class="leyenda">Created</th>
+      <th class="leyenda">Updated</th>
       <th colspan="3"></th>
     </tr>
   </thead>
