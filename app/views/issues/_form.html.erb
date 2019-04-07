@@ -33,7 +33,7 @@
 
   <div class="field">
     <%= form.label :assignee %>
-    <%= form.collection_select :user_id, User.order(:name),:id,:id, include_blank: true %>
+     <%= form.collection_select :assignee_id, User.order(:name),:id,:id, include_blank: true %>
   </div>
 
   <div class="actions">

@@ -1,19 +1,20 @@
 <header>
         
-<div id="issues-toolbar" class="clearfix">
-  <div class="filter-container">
+<div class="filter-container">
     <p class="filter-label">Filter by:</p>
     <ul class="filter-status">
       <li id="all" aria-pressed="true">
-        <a href="/fib_was/issue_tracker_demo/issues">All</a>
+        <a href="/issues">All</a>
       </li>
       <li id="open">
-        <a href="/fib_was/issue_tracker_demo/issues?status=new&amp;status=open">Open</a>
+        <a href="/issues?status=new&amp;status=open">Open</a>
       </li>
-      
+      <li id="myissues">
+        <a href="/issues?user_id="+current_user.id>My issues</a>
+      </li>
+
     </ul>
   </div>
-</div>
 
         <h1>
           Issues
@@ -73,8 +74,10 @@
 	<td><%= image_tag("blocker.svg") %></td>
 	<% end %>
         <td><%= issue.status %></td>
-        <td><%= issue.assignee %></td>
-        <td><%= time_ago_in_words(issue.created_at) + " ago" %></td>
+        <td><% if issue.assignee.present? %>
+            <%= issue.assignee.name %>
+            <% end %>
+        </td>        <td><%= time_ago_in_words(issue.created_at) + " ago" %></td>
         <td><%= time_ago_in_words(issue.updated_at) + " ago" %></td>
         <!--<td><%= link_to 'Show', issue %></td>
         <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
