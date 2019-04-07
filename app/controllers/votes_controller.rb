@@ -1,7 +1,6 @@
 class VotesController < ApplicationController
-  before_action :find_vote, only: [:destroy]
   before_action :find_issue
-
+  before_action :find_vote, only: [:destroy]
 
   
   def create
@@ -28,7 +27,7 @@ class VotesController < ApplicationController
   end
   
   def find_vote
-   @vote = @issue.likes.find(params[:id])
+   @vote = @issue.votes.find(params[:id])
   end
   
   def already_voted?

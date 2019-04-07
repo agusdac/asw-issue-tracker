@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   resources :issues do
     resources :comments
     resources :votes
-
   end
   resources :users
   root to: "issues#index"
