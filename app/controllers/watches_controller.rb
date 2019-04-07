@@ -1,15 +1,19 @@
 class WatchesController < ApplicationController
-    
-  before_action :find_watch, only: [:destroy]
   before_action :find_issue
+  before_action :find_watch, only: [:destroy]
 
   def create
+    if current_user != nil
       if already_watched?
         flash[:notice] = "You can't watch more than once"
       else
         @issue.watches.create(user_id: current_user.id)
+        flash[:notice] = "You are now watching issue #{@issue.id}"
       end
-      #redirect_to issue_path(@issue)
+    else
+      flash[:notice] = "Cannot watch if you're not logged in"
+    end
+      redirect_to issue_path(@issue)
   end
  
   
@@ -28,7 +32,7 @@ class WatchesController < ApplicationController
   end
   
   def find_watch
-    @watch = Issue.watches.find(params[:issue_id])
+    @watch = @issue.watches.find(params[:id])
   end
   
   

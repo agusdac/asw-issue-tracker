@@ -30,7 +30,12 @@
   <%= @issue.assignee %>
 </p>
 
-
+ <% pre_watch = @issue.watches.find { |watch| watch.user_id == current_user.id} %>
+    <% if pre_watch %>
+      <%= button_to 'Unwatch', issue_watch_path(@issue, pre_watch), method: :delete %>
+    <% else %>
+      <%= button_to 'Watch', issue_watches_path(@issue), method: :post %>
+  <% end %>
 <%= link_to 'Edit', edit_issue_path(@issue) %> |
 <%= link_to 'Back', issues_path %>
 
