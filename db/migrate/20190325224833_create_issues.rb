@@ -8,7 +8,6 @@ class CreateIssues < ActiveRecord::Migration[5.1]
       t.string :assignee
       t.date :created
       t.string :description
-      t.references :user, foreign_key: true
 
       t.timestamps
     end

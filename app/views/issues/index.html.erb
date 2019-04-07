@@ -39,7 +39,10 @@
         <td><%= issue.kind %></td>
         <td><%= issue.priority %></td>
         <td><%= issue.status %></td>
-        <td><%= issue.assignee %></td>
+        <td><% if issue.assignee.present? %>
+            <%= issue.assignee.name %>
+            <% end %>
+        </td>
         <td><%= time_ago_in_words(issue.created_at) + " ago" %></td>
         <td><%= time_ago_in_words(issue.updated_at) + " ago" %></td>
         <td><%= link_to 'Show', issue %></td>

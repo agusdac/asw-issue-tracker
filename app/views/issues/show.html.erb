@@ -32,7 +32,9 @@
 
 <p>
   <strong>Assignee:</strong>
-  <%= @issue.assignee %>
+  <% if @issue.assignee.present? %>
+            <%= @issue.assignee.name %>
+  <% end %>
 </p>
 
 

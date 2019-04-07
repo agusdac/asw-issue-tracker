@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190406141347) do
+ActiveRecord::Schema.define(version: 20190407092739) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -30,10 +30,12 @@ ActiveRecord::Schema.define(version: 20190406141347) do
     t.string "assignee"
     t.date "created"
     t.string "description"
-    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_user_id"
+    t.integer "user_id"
+    t.integer "assignee_id"
+    t.index ["assignee_id"], name: "index_issues_on_assignee_id"
+    t.index ["user_id"], name: "index_issues_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -45,8 +47,6 @@ ActiveRecord::Schema.define(version: 20190406141347) do
     t.datetime "updated_at", null: false
     t.string "oauth_token"
     t.datetime "oauth_expires_at"
-    t.integer "{:foreign_key=>true}_id"
-    t.index ["{:foreign_key=>true}_id"], name: "index_users_on_{:foreign_key=>true}_id"
   end
 
 end
