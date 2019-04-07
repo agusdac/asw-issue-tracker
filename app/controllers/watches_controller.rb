@@ -13,7 +13,8 @@ class WatchesController < ApplicationController
     else
       flash[:notice] = "Cannot watch if you're not logged in"
     end
-      redirect_to issue_path(@issue)
+    redirect_back fallback_location: root_path
+
   end
  
   
@@ -23,7 +24,7 @@ class WatchesController < ApplicationController
     else
       @watch.destroy
     end
-    redirect_to issue_path(@issue)
+    redirect_back fallback_location: root_path
   end
   
   private
