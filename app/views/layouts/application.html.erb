@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Google Auth Example App</title>
+    <title>Issue Tracker ASW - Bitbucket style</title>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <div>
-      <% if current_user %>
-        Signed in as <strong><%= current_user.name %></strong>!
-        <%= link_to "Sign out", signout_path, id: "sign_out" %>
-      <% else %>
-        <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
-      <% end %>
-    </div>
-    <div>
-    <%= yield %>
+    <div class="wrap">
+	<!-- The sidebar -->
+	<div class="sidebar">
+	  <a class="active" href="issues#show">Home</a>
+	  <% if current_user %>
+          <img class="perfil_image" src ="<%=current_user.imageurl%>">
+          <p id="perfil_name">Signed in as <strong><%= current_user.name %></p>
+          
+          <%= link_to "Sign out", signout_path, id: "sign_out" %>
+          <% else %>
+          <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in" %>
+          <% end %>
+	</div>
+    	<div class="body">
+    	<%= yield %>
+    	</div>
     </div>
   </body>
 </html>

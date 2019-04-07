@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :uid
       t.string :name
       t.string :email
+      t.string :imageurl
       t.string :created_at
       t.string :updated_at
       t.string :oauth_token

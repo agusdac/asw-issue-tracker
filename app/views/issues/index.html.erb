@@ -1,34 +1,84 @@
+<header>
+        
+<div id="issues-toolbar" class="clearfix">
+  <div class="filter-container">
+    <p class="filter-label">Filter by:</p>
+    <ul class="filter-status">
+      <li id="all" aria-pressed="true">
+        <a href="/fib_was/issue_tracker_demo/issues">All</a>
+      </li>
+      <li id="open">
+        <a href="/fib_was/issue_tracker_demo/issues?status=new&amp;status=open">Open</a>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+        <h1>
+          Issues
+          
+
+            <span class="secondary">(<%= (@issues.count{ |u| [u.title] })%>)</span>
+          
+        </h1>
+      </header>
+
+
 <p id="notice"><%= notice %></p>
 
-<h1>Issues</h1>
-
-<table>
-  <thead>
+<table class = "table">
+  <thead class = "table_header">
     <tr>
-      <th>Title</th>
-      <th>Kind</th>
-      <th>Priority</th>
-      <th>Status</th>
-      <th>Assignee</th>
-      <th>Created</th>
-      <th>Updated</th>
+      <th class="leyenda">Title</th>
+      <th class="leyenda">Kind</th>
+      <th class="leyenda">Priority</th>
+      <th class="leyenda">Status</th>
+      <th class="leyenda">Assignee</th>
+      <th class="leyenda">Created</th>
+      <th class="leyenda">Updated</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
-  <tbody>
+  <tbody class = "table_body">
     <% @issues.each do |issue| %>
       <tr>
-        <td><%= issue.title %></td>
-        <td><%= issue.kind %></td>
-        <td><%= issue.priority %></td>
+        <td><%= link_to issue.title, issue%></td>
+        <% if issue.kind == "bug" %>
+	<td><%= image_tag("bug.svg") %></td>
+        <% end %>
+	<% if issue.kind == "enhancement"%>
+	<td><%= image_tag("enhancement.svg") %></td>
+        <% end %>
+ 	<% if issue.kind == "proposal"%>
+	<td><%= image_tag("proposal.svg") %></td>
+        <% end %>
+	<% if issue.kind == "task"%>
+	<td><%= image_tag("task.svg") %></td>
+        <% end %>
+	<% if issue.priority == "trivial"%>
+	<td><%= image_tag("trivial.svg") %></td>
+	<% end %>
+	<% if issue.priority == "minor"%>
+	<td><%= image_tag("minor.svg") %></td>
+	<% end %>
+	<% if issue.priority == "major"%>
+	<td><%= image_tag("major.svg") %></td>
+	<% end %>
+	<% if issue.priority == "critical"%>
+	<td><%= image_tag("critical.svg") %></td>
+	<% end %>
+	<% if issue.priority == "blocker"%>
+	<td><%= image_tag("blocker.svg") %></td>
+	<% end %>
         <td><%= issue.status %></td>
         <td><%= issue.assignee %></td>
         <td><%= time_ago_in_words(issue.created_at) + " ago" %></td>
         <td><%= time_ago_in_words(issue.updated_at) + " ago" %></td>
-        <td><%= link_to 'Show', issue %></td>
+        <!--<td><%= link_to 'Show', issue %></td>
         <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
-        <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
       </tr>
     <% end %>
   </tbody>
