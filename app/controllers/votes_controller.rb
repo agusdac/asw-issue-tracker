@@ -4,10 +4,14 @@ class VotesController < ApplicationController
 
   
   def create
-    if already_voted?
-      flash[:notice] = "You can't vote more than once"
+    if current_user != nil
+      if already_voted?
+        flash[:notice] = "You can't vote more than once"
+      else
+        @issue.votes.create(user_id: current_user.id)
+      end
     else
-      @issue.votes.create(user_id: current_user.id)
+      flash[:notice] = "Cannot vote if you're not logged in"
     end
     redirect_to issue_path(@issue)
   end
