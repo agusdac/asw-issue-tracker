@@ -35,6 +35,7 @@
       <th class="leyenda">Kind</th>
       <th class="leyenda">Priority</th>
       <th class="leyenda">Status</th>
+      <th class="leyenda">Votes</th>
       <th class="leyenda">Assignee</th>
       <th class="leyenda">Created</th>
       <th class="leyenda">Updated</th>
@@ -73,15 +74,55 @@
 	<% if issue.priority == "blocker"%>
 	<td><%= image_tag("blocker.svg") %></td>
 	<% end %>
-        <td><%= issue.status %></td>
-        <td><% if issue.assignee.present? %>
-            <%= issue.assignee.name %>
-            <% end %>
-        </td>        <td><%= time_ago_in_words(issue.created_at) + " ago" %></td>
+	<% if issue.status == "new" %>
+    <td class = "status" id = "status-new" ><%= issue.status %></td>
+    <%end%>
+    <% if issue.status == "open" %>
+    <td class = "status" id = "status-open" ><%= issue.status %></td>
+    <%end%>
+    <% if issue.status == "on_hold" %>
+    <td class = "status" id = "status-on_hold" ><%= issue.status %></td>
+    <%end%>
+    <% if issue.status == "duplicate" %>
+    <td class = "status" id = "status-duplicate" ><%= issue.status %></td>
+    <%end%>
+    <% if issue.status == "invalid" %>
+    <td class = "status" id = "status-invalid" ><%= issue.status %></td>
+    <%end%>
+    <% if issue.status == "wontfix" %>
+    <td class = "status" id = "status-wontfix" ><%= issue.status %></td>
+    <%end%>
+    <% if issue.status == "closed" %>
+    <td class = "status" id = "status-closed" ><%= issue.status %></td>
+    <%end%>
+    <% if issue.status != "new" and issue.status != "open" and issue.status != "on_hold" and issue.status != "duplicate" and issue.status != "invalid" and issue.status != "wontfix" and issue.status != "closed" %>
+    <td></td>
+    <% end %>
+    <% if issue.votes.count > 0 %>
+        <td id = "vote">
+        <%= issue.votes.count %>
+        </td>
+    <% else %>
+        <td></td>
+        <% end %>
+    <td><% if issue.assignee.present? %>
+        <%= issue.assignee.name %>
+        <% end %>
+    </td>        
+    
+        <td><%= time_ago_in_words(issue.created_at) + " ago" %></td>
         <td><%= time_ago_in_words(issue.updated_at) + " ago" %></td>
         <!--<td><%= link_to 'Show', issue %></td>
         <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
         <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+        <td>
+        <% pre_watch = issue.watches.find { |watch| watch.user_id == current_user.id} %>
+          <% if pre_watch %>
+            <%= button_to 'Unwatch', issue_watch_path(issue, pre_watch), method: :delete %>
+          <% else %>
+            <%= button_to 'Watch', issue_watches_path(issue), method: :post %>
+        <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

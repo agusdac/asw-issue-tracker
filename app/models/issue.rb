@@ -12,4 +12,6 @@ class Issue < ApplicationRecord
     belongs_to :user, class_name: 'User', foreign_key: 'user_id'
     belongs_to :assignee, optional: true, class_name: 'User', foreign_key: 'assignee_id'
     has_many :comments, dependent: :destroy
+    has_many :votes, dependent: :destroy
+    has_many :watches, dependent: :destroy
 end

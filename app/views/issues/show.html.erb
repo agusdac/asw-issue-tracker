@@ -1,19 +1,36 @@
 <p id="notice"><%= notice %></p>
 
   <h1><%= @issue.title %></h1>
-
+  
+  <span>Issue #<% @issue.id %></span>
+  <% if @issue.status == "new" %>
+  <span class = "status" id = "Sstatus-new"><%= @issue.status %></span>
+  <%end%>
+  <% if @issue.status == "open" %>
+  <span class = "status" id = "Sstatus-open"><%= @issue.status %></span>
+  <%end%>
+  <% if @issue.status == "on_hold" %>
+  <span class = "status" id = "Sstatus-on_hold"><%= @issue.status %></span>
+  <%end%>
+  <% if @issue.status == "duplicate" %>
+  <span class = "status" id = "Sstatus-duplicate"><%= @issue.status %></span>
+  <%end%>
+  <% if @issue.status == "invalid" %>
+  <span class = "status" id = "Sstatus-invalid"><%= @issue.status %></span>
+  <%end%>
+  <% if @issue.status == "wontfix" %>
+  <span class = "status" id = "Sstatus-wontfix"><%= @issue.status %></span>
+  <%end%>
+  <% if @issue.status == "closed" %>
+  <span class = "status" id = "Sstatus-closed"><%= @issue.status %></span>
+  <%end%>
   <p>
   <strong>Creator:</strong>
   <%= @issue.user_id %>
-</p>
+  </p>
 <p>
   <strong>Description:</strong>
   <%= @issue.description %>
-</p>
-
-<p>
-  <strong>Kind:</strong>
-  <%= @issue.kind %>
 </p>
 
 <p>
@@ -31,7 +48,20 @@
   <%= @issue.assignee %>
 </p>
 
+<% pre_vote = @issue.votes.find { |vote| vote.user_id == current_user.id} %>
+<% if pre_vote %>
+  <%= button_to 'Unvote', issue_vote_path(@issue, pre_vote), method: :delete %>
+<% else %>
+  <%= button_to 'Vote', issue_votes_path(@issue), method: :post %>
+<% end %>
 
+<p><%= @issue.votes.count %> <%= (@issue.votes.count) == 1 ? 'Vote' : 'Votes'%></p>
+ <% pre_watch = @issue.watches.find { |watch| watch.user_id == current_user.id} %>
+    <% if pre_watch %>
+      <%= button_to 'Unwatch', issue_watch_path(@issue, pre_watch), method: :delete %>
+    <% else %>
+      <%= button_to 'Watch', issue_watches_path(@issue), method: :post %>
+  <% end %>
 <%= link_to 'Edit', edit_issue_path(@issue) %> |
 <%= link_to 'Back', issues_path %>
 
