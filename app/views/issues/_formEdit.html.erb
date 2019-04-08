@@ -24,7 +24,7 @@
   
   <div class="field">
     <%= form.label :status %>
-    <%= form.select :status, [['open'],['on hold'],['resolved'],['duplicate'],['invalid'],['wontfix'],['closed']] %>
+    <%= form.select :status, [['open'],['on hold'],['resolved'],['duplicate'],['invalid'],['wontfix'],['closed']], default: @issue.status %>
     <%= form.submit 'Change status' %>
   </div>
    

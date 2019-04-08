@@ -48,52 +48,52 @@
       <tr>
         <td><%= link_to issue.title, issue%></td>
         <% if issue.kind == "bug" %>
-	<td><%= image_tag("bug.svg") %></td>
+	<td><%= link_to image_tag("bug.svg"), "/issues?kind=bug" %></td>
         <% end %>
 	<% if issue.kind == "enhancement"%>
-	<td><%= image_tag("enhancement.svg") %></td>
+	<td><%= link_to image_tag("enhancement.svg"), "/issues?kind=enhancement" %></td>
         <% end %>
  	<% if issue.kind == "proposal"%>
-	<td><%= image_tag("proposal.svg") %></td>
+	<td><%= link_to image_tag("proposal.svg"), "/issues?kind=proposal" %></td>
         <% end %>
 	<% if issue.kind == "task"%>
-	<td><%= image_tag("task.svg") %></td>
+	<td><%= link_to image_tag("task.svg"), "/issues?kind=task" %></td>
         <% end %>
 	<% if issue.priority == "trivial"%>
-	<td><%= image_tag("trivial.svg") %></td>
+	<td><%= link_to image_tag("trivial.svg"), "/issues?priority=trivial" %> </td>
 	<% end %>
 	<% if issue.priority == "minor"%>
 	<td><%= link_to image_tag("minor.svg"), "/issues?priority=minor" %> </td>
 	<% end %>
 	<% if issue.priority == "major"%>
-	<td><%= image_tag("major.svg") %></td>
+	<td><%= link_to image_tag("major.svg"), "/issues?priority=major" %></td>
 	<% end %>
 	<% if issue.priority == "critical"%>
-	<td><%= image_tag("critical.svg") %></td>
+	<td><%= link_to image_tag("critical.svg"), "/issues?priority=critical" %></td>
 	<% end %>
 	<% if issue.priority == "blocker"%>
-	<td><%= image_tag("blocker.svg") %></td>
+	<td><%= link_to image_tag("blocker.svg"), "/issues?priority=blocker" %></td>
 	<% end %>
 	<% if issue.status == "new" %>
-    <td class = "status" id = "status-new" ><%= issue.status %></td>
+    <td class = "status" id = "status-new" ><%= link_to issue.status, "/issues?status=new" %></td>
     <%end%>
     <% if issue.status == "open" %>
-    <td class = "status" id = "status-open" ><%= issue.status %></td>
+    <td class = "status" id = "status-open" ><%= link_to issue.status, "/issues?status=open" %></td>
     <%end%>
     <% if issue.status == "on_hold" %>
-    <td class = "status" id = "status-on_hold" ><%= issue.status %></td>
+    <td class = "status" id = "status-on_hold" ><%= link_to issue.status, "/issues?status=on_hold" %></td>
     <%end%>
     <% if issue.status == "duplicate" %>
-    <td class = "status" id = "status-duplicate" ><%= issue.status %></td>
+    <td class = "status" id = "status-duplicate" ><%= link_to issue.status, "/issues?status=duplicate" %></td>
     <%end%>
     <% if issue.status == "invalid" %>
-    <td class = "status" id = "status-invalid" ><%= issue.status %></td>
+    <td class = "status" id = "status-invalid" ><%= link_to issue.status, "/issues?status=invalid" %></td>
     <%end%>
     <% if issue.status == "wontfix" %>
-    <td class = "status" id = "status-wontfix" ><%= issue.status %></td>
+    <td class = "status" id = "status-wontfix" ><%= link_to issue.status, "/issues?status=wontfix" %></td>
     <%end%>
     <% if issue.status == "closed" %>
-    <td class = "status" id = "status-closed" ><%= issue.status %></td>
+    <td class = "status" id = "status-closed" ><%= link_to issue.status, "/issues?status=closed" %></td>
     <%end%>
     <% if issue.status != "new" and issue.status != "open" and issue.status != "on_hold" and issue.status != "duplicate" and issue.status != "invalid" and issue.status != "wontfix" and issue.status != "closed" %>
     <td></td>

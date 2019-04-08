@@ -4,8 +4,21 @@ class IssuesController < ApplicationController
   # GET /issues
   # GET /issues.json
   def index
-    if params[:status] == "open" or params[:status] == "new"
+    
+  
+    #status filters
+    if params[:status] == "new"
+      @issues = Issue.where(status: ["new"])
+    elsif params[:status] == "open" or params[:status] == "new"
       @issues = Issue.where(status: ["open", "new"])
+    elsif params[:status].present?
+      @issues = Issue.where(status: [params[:status]])
+    #kind filters
+    elsif params[:kind].present?
+      @issues = Issue.where(kind: [params[:kind]])
+    #priority filters
+    elsif params[:priority].present?
+      @issues = Issue.where(priority: [params[:priority]])
     elsif current_user.present? and params[:user_id] == current_user.id
       @issues = Issue.where(user_id: current_user.id)
     else
