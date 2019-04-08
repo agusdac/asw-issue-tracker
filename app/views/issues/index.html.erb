@@ -63,7 +63,7 @@
 	<td><%= image_tag("trivial.svg") %></td>
 	<% end %>
 	<% if issue.priority == "minor"%>
-	<td><%= image_tag("minor.svg") %></td>
+	<td><%= link_to image_tag("minor.svg"), "/issues?priority=minor" %> </td>
 	<% end %>
 	<% if issue.priority == "major"%>
 	<td><%= image_tag("major.svg") %></td>

@@ -32,9 +32,9 @@ ActiveRecord::Schema.define(version: 20190405180649) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "asignee_id"
     t.integer "user_id"
-    t.index ["asignee_id"], name: "index_issues_on_asignee_id"
+    t.integer "assignee_id"
+    t.index ["assignee_id"], name: "index_issues_on_assignee_id"
     t.index ["user_id"], name: "index_issues_on_user_id"
   end
 
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20190405180649) do
     t.string "uid"
     t.string "name"
     t.string "email"
+    t.string "imageurl"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "oauth_token"
