@@ -115,14 +115,18 @@
         <!--<td><%= link_to 'Show', issue %></td>
         <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
         <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+        
+        <% if current_user != nil %>
         <td>
         <% pre_watch = issue.watches.find { |watch| watch.user_id == current_user.id} %>
           <% if pre_watch %>
             <%= button_to 'Unwatch', issue_watch_path(issue, pre_watch), method: :delete %>
           <% else %>
             <%= button_to 'Watch', issue_watches_path(issue), method: :post %>
-        <% end %>
+          <% end %>
         </td>
+        <% end %>
+        
       </tr>
     <% end %>
   </tbody>
