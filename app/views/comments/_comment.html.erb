@@ -2,7 +2,7 @@
 
 <% @comments.each do |comment|%>
 <% if comment.has_attribute?(:user_id) and comment.user != nil %>
-    <p><b> <%= comment.user.email%> </b> 
+    <p><b> <%= comment.user.name%> </b> 
 <% else %>
     <p><b> System: </b> 
 <% end %>
