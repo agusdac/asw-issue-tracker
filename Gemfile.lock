@@ -205,7 +205,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootstrap
+  bootstrap (= 4.3.1)
   byebug (= 9.0.6)
   coffee-rails (= 4.2.2)
   jbuilder (= 2.7.0)

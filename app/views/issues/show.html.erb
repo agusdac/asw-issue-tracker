@@ -1,149 +1,110 @@
+
+<div class="container">
 <p id="notice"><%= notice %></p>
 
-  <h1><%= @issue.title %></h1>
-  
+
+<div class="row">
+<div class="col-8">
+  <span class="issue-title"><%= @issue.title %></span>
+  <br>
   <span>Issue #<% @issue.id %></span>
-  <% if @issue.status == "new" %>
-  <span class = "status" id = "Sstatus-new"><%= @issue.status %></span>
-  <%end%>
-  <% if @issue.status == "open" %>
-  <span class = "status" id = "Sstatus-open"><%= @issue.status %></span>
-  <%end%>
-  <% if @issue.status == "on_hold" %>
-  <span class = "status" id = "Sstatus-on_hold"><%= @issue.status %></span>
-  <%end%>
-  <% if @issue.status == "duplicate" %>
-  <span class = "status" id = "Sstatus-duplicate"><%= @issue.status %></span>
-  <%end%>
-  <% if @issue.status == "invalid" %>
-  <span class = "status" id = "Sstatus-invalid"><%= @issue.status %></span>
-  <%end%>
-  <% if @issue.status == "wontfix" %>
-  <span class = "status" id = "Sstatus-wontfix"><%= @issue.status %></span>
-  <%end%>
-  <% if @issue.status == "closed" %>
-  <span class = "status" id = "Sstatus-closed"><%= @issue.status %></span>
-  <%end%>
-  <p>
-  <strong>Creator:</strong>
-  <%= @issue.user.name %>
-  </p>
-<p>
-  <strong>Description:</strong>
+<br>
+
+
+
+<div class="container">
+<div class="row">
+<div class="col-1">
+<img class="perfil_image" src ="<%=@issue.user.imageurl%>">
+</div>
+
+<div class="col-11">
+  <span class="user-name"><%= @issue.user.name %> </span>
+  created an issue 
+  <span class="time-ago"><%= time_ago_in_words(@issue.created_at)%></span>
+  <br>
   <%= @issue.description %>
-</p>
-
-<p>
-  <strong>Priority:</strong>
-  <%= @issue.priority %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @issue.status %>
-</p>
-
-<p>
-  <strong>Assignee:</strong>
-  <% if @issue.assignee.present? %>
-            <%= @issue.assignee.name %>
-            <% end %>
-</p>
-
-<div class="issue-attrs">
-          <dl>
-            <dt>Assignee</dt>
-            <dd>
-              <% if @issue.assignee.present? %>
-            <%= @issue.assignee.name %>
-            <% else %>
-             &ndash; 
-            <% end %>
-              
-            </dd>
-          </dl>
-          <dl>
-            <dt>Type</dt>
-            <dd class="type with-icon">
-                <span class="icon icon-bug"></span>
-                <%= @issue.kind %>
-            </dd>
-          </dl>
-          <dl>
-            <dt>Priority</dt>
-            <dd class="priority with-icon">
-                <span class="icon icon-major"></span>
-                <%= @issue.priority %>
-            </dd>
-          </dl>
-          <dl>
-            <dt>Status</dt>
-            <dd class="status">
-              <%= @issue.status %>
-            </dd>
-          </dl>
-          <dl>
-            <dt>Votes</dt>
-            <dd class="votes">
-              <span id="issue-vote-count" class="aui-badge">
-                  <%= @issue.votes.count %>
-                </span>
-                <div
-                   id="issue-vote-trigger" class="vote-issue"
-                   data-vote-text="Vote for this issue"
-                   data-unvote-text="Remove vote"
-                   
-                     data-voted="false"
-                     title="Vote for this issue"> 
-                    <% pre_vote = @issue.votes.find { |vote| vote.user_id == current_user.id} %>  
-                     <% if pre_vote %>
-                      <%= button_to 'Unvote', issue_vote_path(@issue, pre_vote), method: :delete %>
-                    <% else %>
-                      <%= button_to 'Vote', issue_votes_path(@issue), method: :post %>
-                    <% end %>
-                   
-                </div>
-              
-            </dd>
-          </dl>
-          <dl>
-            <dt>Watchers</dt>
-            <dd class="watchers">
-              <span id="issue-watch-count" class="aui-badge">
-                <%= @issue.watches.count %>
-              </span>
-              
-                <a href="/api/1.0/repositories/fib_was/issue_tracker_demo/issue/29/follow"
-                   id="issue-watch-trigger"
-                   class="follow-issue follow"
-                   data-follow-text="Watch this issue"
-                   data-unfollow-text="Stop watching"
-                    
-                      title="Watch this issue"> Watch this issue
-                    
-                </a>
-              
-            </dd>
-          </dl>
-        </div>
-
-<% pre_vote = @issue.votes.find { |vote| vote.user_id == current_user.id} %>
-<% if pre_vote %>
-  <%= button_to 'Unvote', issue_vote_path(@issue, pre_vote), method: :delete %>
-<% else %>
-  <%= button_to 'Vote', issue_votes_path(@issue), method: :post %>
-<% end %>
- <% pre_watch = @issue.watches.find { |watch| watch.user_id == current_user.id} %>
-    <% if pre_watch %>
-      <%= button_to 'Unwatch', issue_watch_path(@issue, pre_watch), method: :delete %>
-    <% else %>
-      <%= button_to 'Watch', issue_watches_path(@issue), method: :post %>
-  <% end %>
-<%= link_to 'Edit', edit_issue_path(@issue) %> |
-<%= link_to 'Back', issues_path %>
+</div>
+</div>
+</div>
 
 <hr>
 
 <%= render 'comments/comment'%>
 <br>
 <%= render 'comments/form'%>
+
+</div>
+
+<div class="col-4">
+
+<%= link_to 'Edit', edit_issue_path(@issue) %> |
+<%= link_to 'Back', issues_path %>
+<div class="issue-attrs">
+<table class="table table-sm">
+  <tbody>
+    <tr>
+      <th scope="row">Asignee</th>
+      <td>
+      <% if @issue.assignee.present? %>
+        <%= @issue.assignee.name %>
+      <% else %>
+        &ndash; 
+      <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Type</th>
+      <td>
+      <%= @issue.kind %>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Priority</th>
+      <td>
+      <%= @issue.priority %>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Status</th>
+      <td>
+      <%= @issue.status %>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Votes</th>
+      <td>
+      <%= @issue.votes.count %>
+      
+      <% if current_user %>
+        <% pre_vote = @issue.votes.find { |vote| vote.user_id == current_user.id} %>  
+                     <% if pre_vote %>
+                      <%= button_to 'Unvote', issue_vote_path(@issue, pre_vote), method: :delete %>
+                    <% else %>
+                      <%= button_to 'Vote', issue_votes_path(@issue), method: :post %>
+                    <% end %>
+                    <% end %>
+
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Watchers</th>
+      <td>
+                <%= @issue.watches.count %>
+
+      <% if current_user %>
+ <% pre_watch = @issue.watches.find { |watch| watch.user_id == current_user.id} %>
+    <% if pre_watch %>
+      <%= button_to 'Unwatch', issue_watch_path(@issue, pre_watch), method: :delete %>
+    <% else %>
+      <%= button_to 'Watch', issue_watches_path(@issue), method: :post %>
+  <% end %>
+                    <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>

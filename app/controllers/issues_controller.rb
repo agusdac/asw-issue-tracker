@@ -73,7 +73,7 @@ class IssuesController < ApplicationController
     respond_to do |format|
       if @issue.update(issue_params)
         if @issue.saved_changes.include?(:status)
-          @comment = @issue.comments.new(content: "changed status to " + @issue.status)
+          @comment = @issue.comments.new(content: "changed status to " + @issue.status, user_id: @issue.user.id)
           @comment.save!
         end
         format.html { redirect_to @issue, notice: 'Issue was successfully updated.' }
