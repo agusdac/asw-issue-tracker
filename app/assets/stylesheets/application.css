@@ -24,6 +24,11 @@
   margin-top: 10px;
 }
 
+.perfil_image_table {
+  border-radius: 50%;
+  max-width: 30%;  
+}
+
 #perfil_name {
   margin-top: 8px;
   margin-left: 16px;
@@ -33,10 +38,11 @@
      text-align:center;
      border-spacing: 2px;
      border-color: #ccc;
+     border-collapse: collapse;
 }
 
 #vote {
-border-radius: 2em;
+    border-radius: 2em;
     font-size: 11px;
     font-weight: 700;
     line-height: .99;
@@ -50,13 +56,13 @@ border-radius: 2em;
     text-decoration: none;
     text-align: center;
     text-transform: uppercase;
-        background-color: #326ca6;
+    background-color: #326ca6;
     color: #fff;
 }
 
 
 
-tr:first-child{ border-bottom: 1px solid #555;}
+#leyendaTR:first-child{ border-bottom: 1px solid #555;}
 
 tr {
     border-top:4px solid transparent;
@@ -69,10 +75,27 @@ tr:hover {
 
 }
 
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    float: none;
+    margin-bottom: 0;
+}
+
+.filter-status {
+    font-size: 13px;
+    line-height: 18px;
+    float: none;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    list-style: none;
+}
+
 .status {
     border: 1px solid #ccc;
     border-radius: 3px;
-    font-size: 11px;
+    font-size 11px;
     font-weight: 700;
     line-height: 99%;
     margin: 0;
@@ -84,8 +107,53 @@ tr:hover {
     background-color: #fff;
     color: #172B4D;
 }
-.status:hover {
-    text-decoration: underline;
+
+
+.filter {
+    display:inline;
+    
+    border: none;
+    box-sizing: border-box;
+    margin-right: 4px;
+    height: 32px;
+    min-width: 24px;
+    border-radius: 3px;
+    text-shadow: none;
+    padding: 4px 10px;
+    background: 0 0;
+    line-height: 1.57142857em;
+    text-decoration: none;
+  
+  color: #505F79;
+  padding: 10px;
+}
+
+.filter:hover {
+    background-color: #e6ecf7;
+}
+
+.filter-status>li[aria-pressed=true] a {
+    background-color: #505F79;
+    color: #FFF;
+}
+
+.filter[aria_pressed=true]{
+    background-color: #505F79;
+    color: #FFFFFF;
+}
+
+#newIssue {
+  text-decoration: none;
+  background-color: #e6ecf7;
+  color: #505F79;
+  padding: 10px;
+  border-radius:5px;
+  }
+
+#newIssue:hover {
+    cursor: pointer;
+    border-color: #3e7ae8;
+    border: 1px;
 }
 
 #status-new {
@@ -123,8 +191,28 @@ tr:hover {
     color: #172B4D;
 }
 
+#watch {
+    overflow: hidden;
+    text-indent: -9999px;
+    background-size: 16px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin-top: 1px;
+    width: 16px;
+    height: 16px;
+}
+
 .body {
   margin-left: 220px;
+}
+
+:any-link {
+    text-decoration:none;
+}
+:any-link:hover {
+    background:transparent;
+    color: inherit;
 }
 
 .issues .issues-toolbar {
@@ -136,7 +224,7 @@ tr:hover {
 }
 
 .leyenda {
- padding: 16px;   
+    padding: 16px;   
 }
 
 .table_header {

@@ -1,39 +1,30 @@
-<header>
-        
-<div class="filter-container">
-    <p class="filter-label">Filter by:</p>
-    <ul class="filter-status">
-      <li id="all" aria-pressed="true">
-        <a href="/issues">All</a>
-      </li>
-      <li id="open">
-        <a href="/issues?status=new&amp;status=open">Open</a>
-      </li>
-      <li id="myissues">
-        <a href="/issues?user_id=m">My issues</a>
-      </li>
-      <li id="watching">
-        <a href="/issues?user_id=w">Watching</a>
-      </li>
-
-    </ul>
-  </div>
-
-        <h1>
-          Issues
-          
-
-            <span class="secondary">(<%= (@issues.count{ |u| [u.title] })%>)</span>
-          
-        </h1>
-      </header>
-
-
+<header>        
+    <div class="filter-container">
+        <p class="filter-label">Filter by:</p>
+        <ul class="filter-status">
+        <li class="filter" <% if request.env['ORIGINAL_FULLPATH'] == "/issues"%> aria_pressed="true"  <%end%>>
+            <a href="/issues">All</a>
+        </li>
+        <li class="filter" <% if request.env['ORIGINAL_FULLPATH'] == "/issues?status=new&status=open"%> aria_pressed="true"  <%end%>>
+            <a href="/issues?status=new&amp;status=open">Open</a>
+        </li>
+        <li class="filter" <% if request.env['ORIGINAL_FULLPATH'] == "/issues?user_id=m"%> aria_pressed="true"  <%end%>>
+            <a href="/issues?user_id=m">My issues</a>
+        </li>
+        <li class="filter" <% if request.env['ORIGINAL_FULLPATH'] == "/issues?user_id=w"%> aria_pressed="true"  <%end%>>
+            <a href="/issues?user_id=w">Watching</a>
+        </li>
+        </ul>
+    </div>
+    <div>
+    <span id = "newIssue" style="float:right;"> <%= link_to 'Create Issue', new_issue_path %> </span>
+    </div>
+        <h1>Issues<span class="secondary">(<%= (@issues.count{ |u| [u.title] })%>)</span></h1>
+</header>
 <p id="notice"><%= notice %></p>
-
 <table class = "table">
   <thead class = "table_header">
-    <tr>
+    <tr id="leyendaTR">
       <th class="leyenda">Title</th>
       <th class="leyenda">Kind</th>
       <th class="leyenda">Priority</th>
@@ -109,7 +100,8 @@
         <td></td>
         <% end %>
     <td><% if issue.assignee.present? %>
-        <%= link_to issue.assignee.name, "/issues?assignee_id=" + issue.assignee_id.to_s %>
+        <img class="perfil_image_table" src ="<%=issue.assignee.imageurl%>">
+        <%= link_to issue.assignee.name, "/issues?assignee_id=" + issue.assignee_id.to_s, :style=>"vertical-align: middle;" %>
         <% end %>
     </td>        
     
@@ -123,9 +115,9 @@
         <td>
         <% pre_watch = issue.watches.find { |watch| watch.user_id == current_user.id} %>
           <% if pre_watch %>
-            <%= button_to 'Unwatch', issue_watch_path(issue, pre_watch), method: :delete %>
+            <%= link_to image_tag("unwatch.svg", :id=>"watch"), issue_watch_path(issue, pre_watch), method: :delete  %>
           <% else %>
-            <%= button_to 'Watch', issue_watches_path(issue), method: :post %>
+            <%= link_to image_tag("watch.svg", :id=>"watch"), issue_watches_path(issue), method: :post%>
           <% end %>
         </td>
         <% end %>
@@ -134,7 +126,3 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Issue', new_issue_path %>
