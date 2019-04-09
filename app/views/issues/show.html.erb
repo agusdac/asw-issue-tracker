@@ -50,14 +50,89 @@
             <% end %>
 </p>
 
+<div class="issue-attrs">
+          <dl>
+            <dt>Assignee</dt>
+            <dd>
+              <% if @issue.assignee.present? %>
+            <%= @issue.assignee.name %>
+            <% else %>
+             &ndash; 
+            <% end %>
+              
+            </dd>
+          </dl>
+          <dl>
+            <dt>Type</dt>
+            <dd class="type with-icon">
+                <span class="icon icon-bug"></span>
+                <%= @issue.kind %>
+            </dd>
+          </dl>
+          <dl>
+            <dt>Priority</dt>
+            <dd class="priority with-icon">
+                <span class="icon icon-major"></span>
+                <%= @issue.priority %>
+            </dd>
+          </dl>
+          <dl>
+            <dt>Status</dt>
+            <dd class="status">
+              <%= @issue.status %>
+            </dd>
+          </dl>
+          <dl>
+            <dt>Votes</dt>
+            <dd class="votes">
+              <span id="issue-vote-count" class="aui-badge">
+                  <%= @issue.votes.count %>
+                </span>
+                <div
+                   id="issue-vote-trigger" class="vote-issue"
+                   data-vote-text="Vote for this issue"
+                   data-unvote-text="Remove vote"
+                   
+                     data-voted="false"
+                     title="Vote for this issue"> 
+                    <% pre_vote = @issue.votes.find { |vote| vote.user_id == current_user.id} %>  
+                     <% if pre_vote %>
+                      <%= button_to 'Unvote', issue_vote_path(@issue, pre_vote), method: :delete %>
+                    <% else %>
+                      <%= button_to 'Vote', issue_votes_path(@issue), method: :post %>
+                    <% end %>
+                   
+                </div>
+              
+            </dd>
+          </dl>
+          <dl>
+            <dt>Watchers</dt>
+            <dd class="watchers">
+              <span id="issue-watch-count" class="aui-badge">
+                <%= @issue.watches.count %>
+              </span>
+              
+                <a href="/api/1.0/repositories/fib_was/issue_tracker_demo/issue/29/follow"
+                   id="issue-watch-trigger"
+                   class="follow-issue follow"
+                   data-follow-text="Watch this issue"
+                   data-unfollow-text="Stop watching"
+                    
+                      title="Watch this issue"> Watch this issue
+                    
+                </a>
+              
+            </dd>
+          </dl>
+        </div>
+
 <% pre_vote = @issue.votes.find { |vote| vote.user_id == current_user.id} %>
 <% if pre_vote %>
   <%= button_to 'Unvote', issue_vote_path(@issue, pre_vote), method: :delete %>
 <% else %>
   <%= button_to 'Vote', issue_votes_path(@issue), method: :post %>
 <% end %>
-
-<p><%= @issue.votes.count %> <%= (@issue.votes.count) == 1 ? 'Vote' : 'Votes'%></p>
  <% pre_watch = @issue.watches.find { |watch| watch.user_id == current_user.id} %>
     <% if pre_watch %>
       <%= button_to 'Unwatch', issue_watch_path(@issue, pre_watch), method: :delete %>
