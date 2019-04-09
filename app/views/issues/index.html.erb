@@ -10,7 +10,10 @@
         <a href="/issues?status=new&amp;status=open">Open</a>
       </li>
       <li id="myissues">
-        <a href="/issues?user_id="+current_user.id>My issues</a>
+        <a href="/issues?user_id=m">My issues</a>
+      </li>
+      <li id="watching">
+        <a href="/issues?user_id=w">Watching</a>
       </li>
 
     </ul>
@@ -106,7 +109,7 @@
         <td></td>
         <% end %>
     <td><% if issue.assignee.present? %>
-        <%= issue.assignee.name %>
+        <%= link_to issue.assignee.name, "/issues?assignee_id=" + issue.assignee_id.to_s %>
         <% end %>
     </td>        
     

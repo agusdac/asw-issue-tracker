@@ -19,8 +19,17 @@ class IssuesController < ApplicationController
     #priority filters
     elsif params[:priority].present?
       @issues = Issue.where(priority: [params[:priority]])
-    elsif current_user.present? and params[:user_id] == current_user.id
+    #user filters
+    elsif params[:assignee_id].present?
+      @issues = Issue.where(assignee_id: [params[:assignee_id]])
+    #myissues
+    elsif current_user.present? and params[:user_id] == "m"
       @issues = Issue.where(user_id: current_user.id)
+    elsif current_user.present? and params[:user_id] == "w"
+     # @issues = Issue.all
+      #@watches = Watch.all.select {|w| w.user_id == current_user.id}
+      #@issues = @watches.select {|w| w.issue}
+      @issues = Issue.all
     else
       @issues = Issue.all
     end
