@@ -5,14 +5,16 @@ class CommentsController < ApplicationController
 
     def create
         if current_user != nil
-            @comment = @issue.comments.create(params[:comment].permit(:content))
-            @comment.user_id = current_user.id
-            @comment.save
-
-            if @comment.save
-                redirect_to issue_path(@issue)
+            if !params[:comment][:content].blank?
+                @comment = @issue.comments.create(params[:comment].permit(:content))
+                @comment.user_id = current_user.id
+                if @comment.save
+                    redirect_to issue_path(@issue)
+                else
+                    render 'new'
+                end
             else
-                render 'new'
+                redirect_to issue_path(@issue)
             end
         else
             redirect_to @issue, notice: 'You must be logged in' 
