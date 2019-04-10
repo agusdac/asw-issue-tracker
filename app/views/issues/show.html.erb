@@ -20,7 +20,11 @@
             <span class="user-name"><%= @issue.user.name %> </span>
             <span class="not-bold">created an issue </span>
             <span class="time-ago not-bold"><%= time_ago_in_words(@issue.created_at)%></span>
-            <p class="not-bold my-2"><%= @issue.description %></p>
+            <% if @issue.description.blank? %>
+              <p class="not-bold my-2">No description provided.</p>
+            <% else %>
+              <p class="not-bold my-2"><%= @issue.description %></p>
+            <% end %>
           </div>
         </div>
       </div>
