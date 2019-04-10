@@ -1,4 +1,24 @@
 <%= form_for([@issue, @comment]) do |f| %>
-<%= f.text_area :content%>
-<%= f.submit%>
+
+<div class="container pt-5">
+    <div class="row">
+      <div class="col-2">
+        <div class="field not-bold text-right">
+            Comentario
+        </div>
+      </div>
+
+      <div class="col-5">
+        <%= f.text_area :content, :class => "form-control"%>
+      </div>
+    </div>
+
+     <div class="row justify-content-end">
+        <div class="actions">
+          <span class="mx-3"><%= f.submit :class =>'button-primary' %></span>
+        </div>
+        <span class="mx-3 no-bold">
+<%= link_to 'Cancel', @issue, class: 'link-secondary not-bold align-middle' %></span>
+    </div>
+</div>
 <% end %>
