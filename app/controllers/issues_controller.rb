@@ -1,11 +1,11 @@
 class IssuesController < ApplicationController
   before_action :set_issue, only: [:show, :edit, :update, :destroy]
-
+  
   # GET /issues
   # GET /issues.json
   def index
-    
-  
+     
+   # Issue.column_names.include?(params[:sort]) ? params[:sort] : ''
     #status filters
     if params[:status] == "new"
       @issues = Issue.where(status: ["new"])
@@ -25,13 +25,16 @@ class IssuesController < ApplicationController
     #myissues
     elsif current_user.present? and params[:user_id] == "m"
       @issues = Issue.where(user_id: current_user.id)
-    elsif current_user.present? and params[:user_id] == "w"
-     # @issues = Issue.all
-      #@watches = Watch.all.select {|w| w.user_id == current_user.id}
-      #@issues = @watches.select {|w| w.issue}
-      @issues = Issue.all
+    elsif current_user.present? and params[:watching] == "w"
+     
+      @issues = Issue.joins(:watches).where(['watches.user_id = issues.user_id'])
+      
     else
       @issues = Issue.all
+    end
+    
+    if params[:sort].present?
+        @issues = @issues.order(params[:sort])
     end
   end
 

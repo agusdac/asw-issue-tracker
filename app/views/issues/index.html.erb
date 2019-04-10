@@ -13,7 +13,7 @@
             <a href="/issues?user_id=m">My issues</a>
         </li>
         <li class="filter" <% if request.env['ORIGINAL_FULLPATH'] == "/issues?user_id=w"%> aria_pressed="true"  <%end%>>
-            <a href="/issues?user_id=w">Watching</a>
+            <a href="/issues?watching=w">Watching</a>
         </li>
         <% end %>
         </ul>
@@ -29,14 +29,15 @@
 <table class = "table">
   <thead class = "table_header">
     <tr id="leyendaTR">
-      <th class="leyenda">Title</th>
-      <th class="leyenda">Kind</th>
-      <th class="leyenda">Priority</th>
-      <th class="leyenda">Status</th>
+      
+      <th class="leyenda"><%= link_to "Title", "/issues?sort=id" %></th>
+      <th class="leyenda"><%= link_to "Kind", "/issues?sort=kind"%></th>
+      <th class="leyenda"><%= link_to "Priority", "/issues?sort=priority" %></th>
+      <th class="leyenda"><%= link_to "Status", "/issues?sort=status" %></th>
       <th class="leyenda">Votes</th>
-      <th class="leyenda">Assignee</th>
-      <th class="leyenda">Created</th>
-      <th class="leyenda">Updated</th>
+      <th class="leyenda"><%= link_to "Assignee", "/issues?sort=assignee_id" %></th>
+      <th class="leyenda"><%= link_to "Created", "/issues?sort=created_at" %></th>
+      <th class="leyenda"><%= link_to "Updated", "/issues?sort=updated_at" %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -44,7 +45,7 @@
   <tbody class = "table_body">
     <% @issues.each do |issue| %>
       <tr>
-        <td><%= link_to issue.title, issue%></td>
+        <td><%= link_to '#' + issue.id.to_s + ': ' + issue.title, issue %></td>
         <% if issue.kind == "bug" %>
 	<td><%= link_to image_tag("bug.svg"), "/issues?kind=bug" %></td>
         <% end %>
