@@ -10,7 +10,7 @@
     <div class="wrap">
 	<!-- The sidebar -->
 	<div class="sidebar">
-	  <a class="active" href="issues#show">Home</a>
+	  <%= link_to 'Home', issues_path, :class=>"active" %>
 	  <% if current_user %>
           <img class="perfil_image" src ="<%=current_user.imageurl%>">
           <p id="perfil_name">Signed in as <strong><%= current_user.name %></p>

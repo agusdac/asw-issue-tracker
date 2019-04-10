@@ -8,16 +8,20 @@
         <li class="filter" <% if request.env['ORIGINAL_FULLPATH'] == "/issues?status=new&status=open"%> aria_pressed="true"  <%end%>>
             <a href="/issues?status=new&amp;status=open">Open</a>
         </li>
+        <% if current_user %>
         <li class="filter" <% if request.env['ORIGINAL_FULLPATH'] == "/issues?user_id=m"%> aria_pressed="true"  <%end%>>
             <a href="/issues?user_id=m">My issues</a>
         </li>
         <li class="filter" <% if request.env['ORIGINAL_FULLPATH'] == "/issues?user_id=w"%> aria_pressed="true"  <%end%>>
             <a href="/issues?user_id=w">Watching</a>
         </li>
+        <% end %>
         </ul>
     </div>
     <div>
+    <% if current_user %>
     <span id = "newIssue" style="float:right;"> <%= link_to 'Create Issue', new_issue_path %> </span>
+    <% end %>   
     </div>
         <h1>Issues<span class="secondary">(<%= (@issues.count{ |u| [u.title] })%>)</span></h1>
 </header>
