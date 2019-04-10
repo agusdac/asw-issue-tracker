@@ -2,13 +2,6 @@
 <div class="container">
 <p id="notice"><%= notice %></p>
 
-  <% if @issue.file.present? %>
-  <div>
-    <%= link_to "Download attachment", @issue.file.url(:original, false) %>
-  </div>
-  <%end%>
-  
-
 <div class="row">
 <div class="col-8">
   <span class="issue-title"><%= @issue.title %></span>
@@ -34,6 +27,14 @@
 </div>
 </div>
 </div>
+
+<div>
+  <% if @issue.file.present? %>
+
+    <%= link_to "Download attachment", @issue.file.url(:original, false) %>
+ 
+  <%end%>
+ </div>
 
 <hr>
 
