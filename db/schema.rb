@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190405180649) do
+ActiveRecord::Schema.define(version: 20190410132909) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -34,6 +34,10 @@ ActiveRecord::Schema.define(version: 20190405180649) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.integer "assignee_id"
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.integer "file_file_size"
+    t.datetime "file_updated_at"
     t.index ["assignee_id"], name: "index_issues_on_assignee_id"
     t.index ["user_id"], name: "index_issues_on_user_id"
   end

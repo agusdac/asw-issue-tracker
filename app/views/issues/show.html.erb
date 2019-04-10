@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
   <h1><%= @issue.title %></h1>
+  <% if @issue.file.present? %>
+  <div>
+    <%= link_to "Download attachment", @issue.file.url(:original, false) %>
+  </div>
+  <%end%>
   
   <span>Issue #<% @issue.id %></span>
   <% if @issue.status == "new" %>

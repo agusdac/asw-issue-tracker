@@ -1,4 +1,7 @@
-<%= form_with(model: issue, local: true) do |form| %>
+
+<%= form_for @issue, html: { multipart: true } do |form| %>
+
+  
   <% if issue.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(issue.errors.count, "error") %> prohibited this issue from being saved:</h2>
@@ -35,6 +38,13 @@
     <%= form.label :assignee %>
      <%= form.collection_select :assignee_id, User.order(:name),:id,:name, include_blank: true %>
   </div>
+  
+  <div>
+    <!-- Other fields go here... -->
+    <%= form.label :file, "File" %>
+    <%= form.file_field :file %>
+  </div>
+  
   
 
   <div class="actions">
