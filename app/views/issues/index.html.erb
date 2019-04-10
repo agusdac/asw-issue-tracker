@@ -3,17 +3,17 @@
         <p class="filter-label">Filter by:</p>
         <ul class="filter-status">
         <li class="filter" <% if request.env['ORIGINAL_FULLPATH'] == "/issues"%> aria_pressed="true"  <%end%>>
-            <a href="/issues">All</a>
+            <a <% if request.env['ORIGINAL_FULLPATH'] == "/issues"%> id="pruebaF"<%end%> href="/issues">All</a>
         </li>
         <li class="filter" <% if request.env['ORIGINAL_FULLPATH'] == "/issues?status=new&status=open"%> aria_pressed="true"  <%end%>>
-            <a href="/issues?status=new&amp;status=open">Open</a>
+            <a <% if request.env['ORIGINAL_FULLPATH'] == "/issues?status=new&status=open"%> id="pruebaF"<%end%> href="/issues?status=new&amp;status=open">Open</a>
         </li>
         <% if current_user %>
         <li class="filter" <% if request.env['ORIGINAL_FULLPATH'] == "/issues?user_id=m"%> aria_pressed="true"  <%end%>>
-            <a href="/issues?user_id=m">My issues</a>
+            <a <% if request.env['ORIGINAL_FULLPATH'] == "/issues?user_id=m"%> id="pruebaF"<%end%> href="/issues?user_id=m">My issues</a>
         </li>
         <li class="filter" <% if request.env['ORIGINAL_FULLPATH'] == "/issues?user_id=w"%> aria_pressed="true"  <%end%>>
-            <a href="/issues?user_id=w">Watching</a>
+            <a <% if request.env['ORIGINAL_FULLPATH'] == "/issues?user_id=w"%> id="pruebaF"<%end%> href="/issues?user_id=w">Watching</a>
         </li>
         <% end %>
         </ul>
@@ -29,7 +29,6 @@
 <table class = "table">
   <thead class = "table_header">
     <tr id="leyendaTR">
-      
       <th class="leyenda">Title <%= link_to "↑", "/issues?sort=id" %> <%= link_to "↓", "/issues?sort=id&dir=down" %></th>
       <th class="leyenda">Kind <%= link_to "↑", "/issues?sort=kind" %> <%= link_to "↓", "/issues?sort=kind&dir=down" %></th>
       <th class="leyenda">Priority <%= link_to "↑", "/issues?sort=priority" %> <%= link_to "↓", "/issues?sort=priority&dir=down" %></th>
@@ -37,7 +36,6 @@
       <th class="leyenda">Votes </th>
       <th class="leyenda">Assignee <%= link_to "↑", "/issues?sort=assignee_id" %> <%= link_to "↓", "/issues?sort=assignee_id&dir=down" %></th>
       <th class="leyenda">Created <%= link_to "↑", "/issues?sort=created_at" %> <%= link_to "↓", "/issues?sort=created_at&dir=down" %></th>
-      <th class="leyenda">Updated <%= link_to "↑", "/issues?sort=updated_at" %> <%= link_to "↓", "/issues?sort=updated_at&dir=down" %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -74,27 +72,30 @@
 	<td><%= link_to image_tag("blocker.svg"), "/issues?priority=blocker" %></td>
 	<% end %>
 	<% if issue.status == "new" %>
-    <td class = "status" id = "status-new" ><%= link_to issue.status, "/issues?status=new" %></td>
+    <td class = "status" ><%= link_to issue.status, "/issues?status=new", :id => "status-new" %></td>
     <%end%>
     <% if issue.status == "open" %>
-    <td class = "status" id = "status-open" ><%= link_to issue.status, "/issues?status=open" %></td>
+    <td class = "status"><%= link_to issue.status, "/issues?status=open", :id => "status-open" %></td>
     <%end%>
-    <% if issue.status == "on_hold" %>
-    <td class = "status" id = "status-on_hold" ><%= link_to issue.status, "/issues?status=on_hold" %></td>
+    <% if issue.status == "on hold" %>
+    <td class = "status" ><%= link_to issue.status, "/issues?status=on_hold", :id => "status-on_hold" %></td>
     <%end%>
     <% if issue.status == "duplicate" %>
-    <td class = "status" id = "status-duplicate" ><%= link_to issue.status, "/issues?status=duplicate" %></td>
+    <td class = "status"><%= link_to issue.status, "/issues?status=duplicate", :id => "status-duplicate" %></td>
     <%end%>
     <% if issue.status == "invalid" %>
-    <td class = "status" id = "status-invalid" ><%= link_to issue.status, "/issues?status=invalid" %></td>
+    <td class = "status"><%= link_to issue.status, "/issues?status=invalid", :id => "status-invalid" %></td>
     <%end%>
     <% if issue.status == "wontfix" %>
-    <td class = "status" id = "status-wontfix" ><%= link_to issue.status, "/issues?status=wontfix" %></td>
+    <td class = "status"><%= link_to issue.status, "/issues?status=wontfix", :id => "status-wontfix" %></td>
     <%end%>
     <% if issue.status == "closed" %>
-    <td class = "status" id = "status-closed" ><%= link_to issue.status, "/issues?status=closed" %></td>
+    <td class = "status"><%= link_to issue.status, "/issues?status=closed", :id => "status-closed" %></td>
     <%end%>
-    <% if issue.status != "new" and issue.status != "open" and issue.status != "on_hold" and issue.status != "duplicate" and issue.status != "invalid" and issue.status != "wontfix" and issue.status != "closed" %>
+    <% if issue.status == "resolved" %>
+    <td class = "status" ><%= link_to issue.status, "/issues?status=resolved", :id => "status-resolved" %></td>
+    <%end%>
+    <% if issue.status != "new" and issue.status != "open" and issue.status != "on hold" and issue.status != "duplicate" and issue.status != "invalid" and issue.status != "wontfix" and issue.status != "closed" and issue.status != "resolved" %>
     <td></td>
     <% end %>
     <% if issue.votes.count > 0 %>
@@ -104,7 +105,7 @@
     <% else %>
         <td></td>
         <% end %>
-    <td><% if issue.assignee.present? %>
+    <td style="vertical-align:middle;"><% if issue.assignee.present? %>
         <img class="perfil_image_table" src ="<%=issue.assignee.imageurl%>">
         <%= link_to issue.assignee.name, "/issues?assignee_id=" + issue.assignee_id.to_s, :style=>"vertical-align: middle;" %>
         <% end %>
