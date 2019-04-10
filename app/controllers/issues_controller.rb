@@ -24,7 +24,7 @@ class IssuesController < ApplicationController
     #myissues
     elsif current_user.present? and params[:user_id] == "m"
       @issues = Issue.where(user_id: current_user.id)
-    elsif current_user.present? and params[:watching] == "w"
+    elsif current_user.present? and params[:user_id] == "w"
      
       @issues = Issue.joins(:watches).where(['watches.user_id = issues.user_id'])
       
