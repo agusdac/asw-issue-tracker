@@ -26,7 +26,7 @@
 
 .perfil_image_table {
   border-radius: 50%;
-  max-width: 30%;  
+  max-width: 10%;  
 }
 
 #perfil_name {
@@ -34,6 +34,9 @@
   margin-left: 16px;
 }
 
+#pruebaF {
+  color: #FFF;
+}
 .table {
      text-align:center;
      border-spacing: 2px;
@@ -67,12 +70,12 @@
 tr {
     border-top:4px solid transparent;
     border-bottom:4px solid transparent;
+    text-align: center;
 }
 
 tr:hover {
-            background-color: #ccc;
-            border-color: #ccc;
-
+    background-color: #ccc;
+    border-color: #ccc;
 }
 
 .filter-container {
@@ -93,19 +96,18 @@ tr:hover {
 }
 
 .status {
-    border: 1px solid #ccc;
-    border-radius: 3px;
     font-size: 11px;
     font-weight: 700;
-    line-height: 99%;
     margin: 0;
-    padding: 2px 5px;
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
     cursor: pointer;
     background-color: #fff;
-    color: #172B4D;
+}
+
+#status-prueba-span {
+    
 }
 
 
@@ -122,22 +124,20 @@ tr:hover {
     background: 0 0;
     line-height: 1.57142857em;
     text-decoration: none;
-  
-  color: #505F79;
-  padding: 10px;
+    color: #505F79;
+    padding: 10px;
 }
 
 .filter:hover {
     background-color: #e6ecf7;
 }
 
-.filter-status>li[aria-pressed=true] a {
-    background-color: #505F79;
-    color: #FFF;
-}
-
 .filter[aria_pressed=true]{
     background-color: #505F79;
+    color: #FFFFFF;
+}
+
+[laria_pressed=true]{
     color: #FFFFFF;
 }
 
@@ -156,38 +156,119 @@ tr:hover {
 }
 
 #status-new {
-    border-color: #a5b3c2;
+    color: #59697a;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 99%;
+    margin: 0;
+    padding: 2px 5px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    vertical-align: middle;
 }
 
 #status-open {
-    border-color: #a5b3c2;
+    color: #59697a;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 99%;
+    margin: 0;
+    padding: 2px 5px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+        vertical-align: middle;
+
 }
 
 #status-on_hold {
-    border-color: #ffe9a8;
+    color: #edb81e;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 99%;
+    margin: 0;
+    padding: 2px 5px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+        vertical-align: middle;
+
 }
 
 #status-duplicate {
-    border-color: #c0ad9d;
+    color: #d66e17;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 99%;
+    margin: 0;
+    padding: 2px 5px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+        vertical-align: middle;
+
 }
 
 #status-invalid {
-    border-color: #e8a29b;
+    color: #d12f1f;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 99%;
+    margin: 0;
+    padding: 2px 5px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+        vertical-align: middle;
+
 }
 
 #status-wontfix {
-    border-color: #e8a29b;
+    color: #d12f1f;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 99%;
+    margin: 0;
+    padding: 2px 5px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+        vertical-align: middle;
+
 }
 
 #status-closed {
-    background-color: #fff;
-    border-color: #ffe9a8;
+    color: #000;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 99%;
+    margin: 0;
+    padding: 2px 5px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+        vertical-align: middle;
+
 }
 
 #status-resolved {
-    background-color: #fff;
-    border-color: #60b070;
-    color: #172B4D;
+    color: #51965f;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 99%;
+    margin: 0;
+    padding: 2px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    vertical-align: middle;
 }
 
 #watch {
@@ -208,6 +289,7 @@ tr:hover {
 
 :any-link {
     text-decoration:none;
+    color: inherit;
 }
 :any-link:hover {
     background:transparent;
@@ -223,11 +305,21 @@ tr:hover {
 }
 
 .leyenda {
-    padding: 16px;   
+    margin-bottom: 16px;
+    text-align: center;
+    margin-right: 200px;
 }
 
 .table_header {
-    margin-top: 16px;
+    margin-left: -24px;
+    width: 100%;
+
+}
+
+.table_body {
+        margin-left: -24px;
+        width:100%;
+
 }
 
 .clearfix::after {

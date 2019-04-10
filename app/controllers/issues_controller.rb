@@ -1,11 +1,10 @@
 class IssuesController < ApplicationController
   before_action :set_issue, only: [:show, :edit, :update, :destroy]
-
+  
   # GET /issues
   # GET /issues.json
   def index
-    
-  
+     
     #status filters
     if params[:status] == "new"
       @issues = Issue.where(status: ["new"])
@@ -26,12 +25,19 @@ class IssuesController < ApplicationController
     elsif current_user.present? and params[:user_id] == "m"
       @issues = Issue.where(user_id: current_user.id)
     elsif current_user.present? and params[:user_id] == "w"
-     # @issues = Issue.all
-      #@watches = Watch.all.select {|w| w.user_id == current_user.id}
-      #@issues = @watches.select {|w| w.issue}
-      @issues = Issue.all
+      
+      @issues = Issue.joins(:watches).where(['watches.issue_id = issues.id AND watches.user_id = ?', current_user.id])
+      
     else
       @issues = Issue.all
+    end
+    
+    if params[:sort].present?
+      if params[:dir] == "down"
+        @issues = @issues.order(params[:sort]).reverse_order
+      else
+        @issues = @issues.order(params[:sort])
+      end
     end
   end
 
@@ -74,7 +80,7 @@ class IssuesController < ApplicationController
     respond_to do |format|
       if @issue.update(issue_params)
         if @issue.saved_changes.include?(:status)
-          @comment = @issue.comments.new(content: "changed status to " + @issue.status)
+          @comment = @issue.comments.new(content: "changed status to " + @issue.status, user_id: @issue.user.id)
           @comment.save!
         end
         format.html { redirect_to @issue, notice: 'Issue was successfully updated.' }

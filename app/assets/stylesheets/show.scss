@@ -1,0 +1,42 @@
+
+@import "bootstrap";
+
+.issue-attrs {
+    border: 1px solid #DFE1E6;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+tr:hover {
+    background-color: white !important;
+    border-color: white !important;
+}
+
+body {
+    color: #172B4D;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.42857142857143;
+}
+
+.issue-title{
+    font-size: 1.71428571em;
+    font-style: inherit;
+    font-weight: 500;
+    letter-spacing: -.01em;
+    line-height: 1.16666667;
+    color: #172B4D;
+}
+
+.user-name {
+    font-weight: 700;
+    color: #0052CC;
+}
+
+.time-ago{
+    font-size: 12px;
+    color: #707070;
+}

@@ -1,16 +1,31 @@
-<h3> This issue has <%= pluralize(@comments.count, "reply") %></h3>
 
+
+<%= "Comment".pluralize(@comments.count) %> (<%= @comments.count %>)
+<br>
 <% @comments.each do |comment|%>
+<div class="container">
+<div class="row">
+<div class="col-1">
 <% if comment.has_attribute?(:user_id) and comment.user != nil %>
-    <p><b> <%= comment.user.name%> </b> 
+    <img class="perfil_image" src ="<%=comment.user.imageurl%>">
+<% end %>
+</div>
+
+<div class="col-11">
+<% if comment.has_attribute?(:user_id) and comment.user != nil %>
+  <span class="user-name"><%= @issue.user.name %> </span>
 <% else %>
-    <p><b> System: </b> 
+    <b> !!!! ERROR ACTUALIZA EL PROYECTO O COMUNICATE CONMIGO !!!!: </b> 
 <% end %>
 
-<em><%= time_ago_in_words(comment.created_at)%></em></p>
-<p> <%= comment.content %></p>
+ <span class="time-ago"><%= time_ago_in_words(comment.created_at)%></span>
+ <p> <%= comment.content %></p>
 <% if current_user == comment.user %>
     <%= link_to "Edit", edit_issue_comment_path(comment.issue, comment)%>
     <%= link_to "Delete", [comment.issue, comment], method: :delete%>
+    <br>
 <% end%>
+</div>
+</div>
+</div>
 <% end %>
