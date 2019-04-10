@@ -5,7 +5,6 @@ class IssuesController < ApplicationController
   # GET /issues.json
   def index
      
-   # Issue.column_names.include?(params[:sort]) ? params[:sort] : ''
     #status filters
     if params[:status] == "new"
       @issues = Issue.where(status: ["new"])
@@ -34,7 +33,11 @@ class IssuesController < ApplicationController
     end
     
     if params[:sort].present?
+      if params[:dir] == "down"
+        @issues = @issues.order(params[:sort]).reverse_order
+      else
         @issues = @issues.order(params[:sort])
+      end
     end
   end
 

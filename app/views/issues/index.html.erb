@@ -30,14 +30,14 @@
   <thead class = "table_header">
     <tr id="leyendaTR">
       
-      <th class="leyenda"><%= link_to "Title", "/issues?sort=id" %></th>
-      <th class="leyenda"><%= link_to "Kind", "/issues?sort=kind"%></th>
-      <th class="leyenda"><%= link_to "Priority", "/issues?sort=priority" %></th>
-      <th class="leyenda"><%= link_to "Status", "/issues?sort=status" %></th>
-      <th class="leyenda">Votes</th>
-      <th class="leyenda"><%= link_to "Assignee", "/issues?sort=assignee_id" %></th>
-      <th class="leyenda"><%= link_to "Created", "/issues?sort=created_at" %></th>
-      <th class="leyenda"><%= link_to "Updated", "/issues?sort=updated_at" %></th>
+      <th class="leyenda">Title <%= link_to "↑", "/issues?sort=id" %> <%= link_to "↓", "/issues?sort=id&dir=down" %></th>
+      <th class="leyenda">Kind <%= link_to "↑", "/issues?sort=kind" %> <%= link_to "↓", "/issues?sort=kind&dir=down" %></th>
+      <th class="leyenda">Priority <%= link_to "↑", "/issues?sort=priority" %> <%= link_to "↓", "/issues?sort=priority&dir=down" %></th>
+      <th class="leyenda">Status <%= link_to "↑", "/issues?sort=status" %> <%= link_to "↓", "/issues?sort=status&dir=down" %></th>
+      <th class="leyenda">Votes </th>
+      <th class="leyenda">Assignee <%= link_to "↑", "/issues?sort=assignee_id" %> <%= link_to "↓", "/issues?sort=assignee_id&dir=down" %></th>
+      <th class="leyenda">Created <%= link_to "↑", "/issues?sort=created_at" %> <%= link_to "↓", "/issues?sort=created_at&dir=down" %></th>
+      <th class="leyenda">Updated <%= link_to "↑", "/issues?sort=updated_at" %> <%= link_to "↓", "/issues?sort=updated_at&dir=down" %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
