@@ -8,9 +8,9 @@
     padding: 10px;
 }
 
-tr:hover {
-    background-color: white !important;
-    border-color: white !important;
+
+.noHover{
+    pointer-events: none;
 }
 
 body {
@@ -39,4 +39,85 @@ body {
 .time-ago{
     font-size: 12px;
     color: #707070;
+}
+
+.user-image {
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.button-primary{
+    color: #FFF;
+    background: #0052CC;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    border: none;
+    outline: 0;
+    align-items: flex-start;
+    text-align: center;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    height: 2.28571429em;
+    line-height: 1.57142857em;
+    text-decoration: none;
+    vertical-align: baseline;
+    white-space: nowrap;
+    border-top-left-radius: 3.01px;
+    border-bottom-left-radius: 3.01px;
+    border-top-right-radius: 3.01px;
+    border-bottom-right-radius: 3.01px;
+}
+
+.button-primary2{
+    padding: 7px;
+    margin: 3px;
+    color: #505F79;
+    background: #F4F5F7;
+    border: none;
+    outline: 0;
+    height: 2.28571429em;
+    line-height: 1.57142857em;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    border: none;
+    outline: 0;
+    align-items: flex-start;
+    text-align: center;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    height: 2.28571429em;
+    line-height: 1.57142857em;
+    text-decoration: none;
+    vertical-align: baseline;
+    white-space: nowrap;
+    border-top-left-radius: 3.01px;
+    border-bottom-left-radius: 3.01px;
+    border-top-right-radius: 3.01px;
+    border-bottom-right-radius: 3.01px;
+}
+
+.button-primary2:hover{
+    border-color: #999;
+    background: #EBECF0 !important;
+    color: #505F79;
+    border: none;
+    outline: 0;
+    height: 2.28571429em;
+    line-height: 1.57142857em;
+    text-decoration: none;
+}
+
+.button-secondary{
+    color: #505F79;
+    text-decoration: none;
+    font-size: 12px;
+    list-style: none;
 }
