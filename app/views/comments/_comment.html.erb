@@ -18,16 +18,16 @@
                 <b> !!!! ERROR ACTUALIZA EL PROYECTO O COMUNICATE CONMIGO !!!!: </b> 
             <% end %>
 
-            <p> <%= comment.content %></p>
-            <% if current_user == comment.user %>
-                <%= link_to "Edit", edit_issue_comment_path(comment.issue, comment), :class=>"button-secondary"%>
+            <p class="not-bold"> <%= comment.content %></p>
+            <% if current_user == comment.user and current_user != nil%>
+                <%= link_to "Edit", edit_issue_comment_path(comment.issue, comment), :class=>"button-secondary not-bold"%>
                 •
-                <%= link_to "Delete", [comment.issue, comment], method: :delete, :class=>"button-secondary"%>
+                <%= link_to "Delete", [comment.issue, comment], method: :delete, :class=>"button-secondary not-bold"%>
                 •
-                <span class="time-ago"><%= time_ago_in_words(comment.created_at)%></span>
+                <span class="time-ago not-bold"><%= time_ago_in_words(comment.created_at)%></span>
                 <br>
             <% else%>
-                <span class="time-ago"><%= time_ago_in_words(comment.created_at)%></span>
+                <span class="time-ago not-bold"><%= time_ago_in_words(comment.created_at)%></span>
             <% end%>
         </div>
     </div>

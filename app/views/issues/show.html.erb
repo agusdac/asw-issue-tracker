@@ -7,7 +7,8 @@
     <div class="col-8">
       <span class="issue-title"><%= @issue.title %></span>
       <br>
-      <span>Issue #<% @issue.id %></span>
+      <span>Issue #<%= @issue.id %></span>
+      <span class="title-status"><%= @issue.status %></span>
       <br>
       <div class="container my-4">
         <div class="row">
@@ -17,10 +18,9 @@
 
           <div class="col-11">
             <span class="user-name"><%= @issue.user.name %> </span>
-            created an issue 
-            <span class="time-ago"><%= time_ago_in_words(@issue.created_at)%></span>
-            <br>
-            <%= @issue.description %>
+            <span class="not-bold">created an issue </span>
+            <span class="time-ago not-bold"><%= time_ago_in_words(@issue.created_at)%></span>
+            <p class="not-bold my-2"><%= @issue.description %></p>
           </div>
         </div>
       </div>
@@ -31,9 +31,10 @@
       <%= render 'comments/form'%>
     </div>
 
-    <div class="col-4">
-    <%= link_to 'Edit', edit_issue_path(@issue), :class => "button-primary2"%>
-    <%= link_to 'Back', issues_path , :class => "button-primary2"%>
+    <div class="col-4 my-5">
+      <% if @issue.user == current_user %>
+        <%= link_to 'Edit', edit_issue_path(@issue), :class => "button-primary2 "%>
+      <% end %>
       <div class="issue-attrs">
       <table class="table table-sm">
         <tbody>
@@ -68,32 +69,35 @@
           <tr class="noHover">
             <th scope="row">Votes</th>
             <td>
-            <%= @issue.votes.count %>
-            
             <% if current_user %>
               <% pre_vote = @issue.votes.find { |vote| vote.user_id == current_user.id} %>  
-                          <% if pre_vote %>
-                            <%= button_to 'Unvote', issue_vote_path(@issue, pre_vote), method: :delete %>
-                          <% else %>
-                            <%= button_to 'Vote', issue_votes_path(@issue), method: :post %>
-                          <% end %>
-                          <% end %>
-
+              <% if pre_vote %>
+                <span class="counter-active"><%= @issue.votes.count %></span>
+                <%= link_to 'Remove vote', issue_vote_path(@issue, pre_vote), method: :delete , :class => "link-secondary"%>
+              <% else %>
+                <span class="counter-inactive"><%= @issue.votes.count %></span>
+                <%= link_to 'Vote for this issue', issue_votes_path(@issue), method: :post , :class => "link-secondary"%>
+              <% end %>
+            <% else %>
+              <span class="counter-inactive"><%= @issue.votes.count %></span>
+            <% end %>
             </td>
           </tr>
           <tr class="noHover">
             <th scope="row">Watchers</th>
             <td>
-                      <%= @issue.watches.count %>
-
-            <% if current_user %>
-      <% pre_watch = @issue.watches.find { |watch| watch.user_id == current_user.id} %>
-          <% if pre_watch %>
-            <%= button_to 'Unwatch', issue_watch_path(@issue, pre_watch), method: :delete %>
-          <% else %>
-            <%= button_to 'Watch', issue_watches_path(@issue), method: :post %>
-        <% end %>
-                          <% end %>
+              <% if current_user %>
+                <% pre_watch = @issue.watches.find { |watch| watch.user_id == current_user.id} %>
+                <% if pre_watch %>
+                  <span class="counter-active"><%= @issue.watches.count %></span>
+                  <%= link_to 'Stop watching', issue_watch_path(@issue, pre_watch), method: :delete, :class => "link-secondary" %>
+                <% else %>
+                  <span class="counter-inactive"><%= @issue.watches.count %></span>
+                  <%= link_to 'Watch this issue', issue_watches_path(@issue), method: :post, :class => "link-secondary" %>
+                <% end %>
+              <% else %>
+                <span class="counter-inactive"><%= @issue.watches.count %></span>
+              <% end %>
             </td>
           </tr>
         </tbody>
