@@ -20,9 +20,9 @@
 
  <span class="time-ago"><%= time_ago_in_words(comment.created_at)%></span>
  <p> <%= comment.content %></p>
- <p> <% if @issue.file.present? %>
+ <p> <% if comment.file.present? %>
 
-    <%= link_to "Download attachment", @issue.file.url(:original, false) %>
+    <%= link_to "Download attachment", comment.file.url(:original, false) %>
  
   <%end%></p>
 <% if current_user == comment.user %>

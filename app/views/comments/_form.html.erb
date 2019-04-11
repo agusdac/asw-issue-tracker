@@ -8,13 +8,13 @@
           </div>
 
     <div class="col-10">
-<%= form_for([@issue, @issue.comments.build]) do |f| %>
+<%= form_for([@issue, @issue.comments.build], html: { multipart: true}) do |f| %>
 <%= f.text_area :content%>
-  <div>
+
     <!-- Other fields go here... -->
     <%= f.label :file, "File" %>
     <%= f.file_field :file %>
-  </div>
+
 <br>
 <%= f.submit%>
 <% end %>

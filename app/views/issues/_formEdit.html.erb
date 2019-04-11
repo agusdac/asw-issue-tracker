@@ -43,7 +43,18 @@
     <%= form.label :assignee %>
     <%= form.collection_select :assignee_id, User.order(:name),:id,:name, include_blank: true %>
   </div>
-
+  
+  <div>
+  <% if @issue.file.present? %>
+    <!-- %= button_to 'Delete attachment', issue_delAtt_path, method: :post %-->
+  <%else%>
+      
+    <!-- Other fields go here... -->
+    <%= form.label :file, "File" %>
+    <%= form.file_field :file %>
+  <%end%>
+  </div>
+  
   <div class="actions">
     <%= form.submit %>
   </div>

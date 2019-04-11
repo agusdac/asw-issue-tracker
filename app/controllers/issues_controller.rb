@@ -63,6 +63,11 @@ class IssuesController < ApplicationController
     @issue.status = "new";
     @issue.user_id = current_user.id;
     
+    if @issue.file.present?
+      @comment = @issue.comments.new(content: "-- File attached", user_id: @issue.user.id)
+      @comment.save!
+      
+    end
     respond_to do |format|
       if @issue.save
         format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
@@ -100,6 +105,11 @@ class IssuesController < ApplicationController
       format.html { redirect_to issues_url, notice: 'Issue was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+  
+  def delAtt
+    @issue.file.destroy
+    @issue.save
   end
 
   private
