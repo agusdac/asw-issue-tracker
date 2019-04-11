@@ -19,6 +19,10 @@
             <% end %>
 
             <p class="not-bold"> <%= comment.content %></p>
+            <p> <% if comment.file.present? %>
+               <%= link_to "Download attachment", comment.file.url(:original, false) %>
+  
+            <%end%></p>
             <% if current_user == comment.user and current_user != nil%>
                 <%= link_to "Edit", edit_issue_comment_path(comment.issue, comment), :class=>"button-secondary not-bold"%>
                 •
@@ -31,5 +35,6 @@
             <% end%>
         </div>
     </div>
+
 </div>
 <% end %>

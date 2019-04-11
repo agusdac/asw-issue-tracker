@@ -7,13 +7,15 @@
             </div>
 
             <div class="col-11">
-                <%= form_for([@issue, @issue.comments.build]) do |f| %>
+                <%= form_for([@issue, @issue.comments.build], html: { multipart: true}) do |f| %>
                 <%= f.text_area :content , class: 'form-control'%>
+                <%= f.label :file, "File" %>
+                <%= f.file_field :file %>
                 <br>
                 <%= f.submit "Comment", :class => 'button-primary'%>
-            <% end %>
-
-        </div>
+                <% end %>
+            </div>
         <% end %>
+    
     </div>
 </div>

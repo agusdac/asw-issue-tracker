@@ -3,6 +3,7 @@
   <p id="notice"><%= notice %></p>
 
 
+
   <div class="row">
     <div class="col-8">
       <span class="issue-title"><%= @issue.title %></span>
@@ -16,6 +17,7 @@
             <img class="user-image" src ="<%=@issue.user.imageurl%>">
           </div>
 
+
           <div class="col-11">
             <span class="user-name"><%= @issue.user.name %> </span>
             <span class="not-bold">created an issue </span>
@@ -25,6 +27,11 @@
             <% else %>
               <p class="not-bold my-2"><%= @issue.description %></p>
             <% end %>
+            <div>
+              <% if @issue.file.present? %>
+                <%= link_to "Download attachment", @issue.file.url(:original, false) %>
+              <%end%>
+            </div>
           </div>
         </div>
       </div>
@@ -38,6 +45,7 @@
     <div class="col-4 my-5">
       <% if @issue.user == current_user %>
         <%= link_to 'Edit', edit_issue_path(@issue), :class => "button-primary2 "%>
+
       <% end %>
       <div class="issue-attrs">
       <table class="table table-sm">

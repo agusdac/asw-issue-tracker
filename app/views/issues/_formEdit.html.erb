@@ -97,6 +97,16 @@
         </div>
       </div>
     </div>
+      
+    <div>
+      <% if @issue.file.present? %>
+        <!-- %= button_to 'Delete attachment', issue_delAtt_path, method: :post %-->
+      <%else%>
+        <!-- Other fields go here... -->
+        <%= form.label :file, "File" %>
+        <%= form.file_field :file %>
+      <%end%>
+     </div>
 
      <div class="row justify-content-end">
         <div class="actions">
@@ -105,6 +115,7 @@
         <span class="mx-3 no-bold">
 <%= link_to 'Cancel', @issue, class: 'link-secondary not-bold align-middle' %></span>
     </div>
+
 
   </div>
 <% end %>
