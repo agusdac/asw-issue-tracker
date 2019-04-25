@@ -1,10 +1,7 @@
 openapi: 3.0.1
 info:
   title: Swagger Petstore
-  description: 'This is a sample server Petstore server.  You can find out more about     Swagger
-    at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For
-    this sample, you can use the api key `special-key` to test the authorization     filters.'
-  termsOfService: http://swagger.io/terms/
+  description: 'ASW Issue Tracker'
   contact:
     email: apiteam@swagger.io
   license:
@@ -15,7 +12,7 @@ externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 servers:
-- url: https://petstore.swagger.io/v2
+- url: https://issue-tracker-asw-ruby.herokuapp.com/
 - url: http://petstore.swagger.io/v2
 tags:
 - name: issue
@@ -31,7 +28,23 @@ tags:
     description: Find out more about our store
     url: http://swagger.io
 paths:
-  /issue:
+  /issues.json:
+    get:
+      tags:
+      - issue
+      summary: Get all issues
+      description: Returns all issues
+      operationId: getIssues
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Issue'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue'
     put:
       tags:
       - issue
@@ -80,11 +93,7 @@ paths:
         405:
           description: Invalid input
           content: {}
-      security:
-      - petstore_auth:
-        - write:pets
-        - read:pets
-  /issue/findByStatus:
+  /issue.json:
     get:
       tags:
       - issue
@@ -174,7 +183,7 @@ paths:
       - petstore_auth:
         - write:pets
         - read:pets
-  /issue/{id}:
+  /issues/{id}.json:
     get:
       tags:
       - issue
@@ -203,7 +212,7 @@ paths:
           description: Invalid ID supplied
           content: {}
         404:
-          description: Pet not found
+          description: Issue not found
           content: {}
       security:
       - api_key: []
@@ -406,7 +415,23 @@ paths:
         404:
           description: Order not found
           content: {}
-  /user:
+  /users.json:
+    get:
+      tags:
+      - user
+      summary: get users
+      description: This can only be done by the logged in user.
+      operationId: getUsers
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Issue'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue'
     post:
       tags:
       - user
@@ -606,16 +631,15 @@ components:
           type: string
         assignee:
           type: string
-        created:
-          type: string
-          format: $
         description:
           type: string
         created_at:
           type: string
+          format: date
           nullable: false
         updated_at:
           type: string
+          format: date
           nullable: false
         user_id:
           type: integer
@@ -655,11 +679,11 @@ components:
           type: string
         created_at:
           type: string
-          format: ""
+          format: date
           nullable: false
         updated_at:
           type: string
-          format: ""
+          format: date
           nullable: false
         oauth_token:
           type: string
