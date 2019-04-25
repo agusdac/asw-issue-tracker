@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
     # GET /comments
     # GET /comments.json
     def index
-        @comment = Comments.all
+        @comment = Comment.all
     end
 
     def create
