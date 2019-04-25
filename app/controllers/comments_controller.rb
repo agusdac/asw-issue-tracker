@@ -2,6 +2,12 @@ class CommentsController < ApplicationController
     before_action :find_issue
     before_action :find_comment, only: [:destroy, :edit, :update, :comment_owner]
     before_action :comment_owner, only: [:destroy, :edit, :update]
+    
+    # GET /users
+    # GET /users.json
+    def index
+        @comments = Comments.all
+    end
 
     def create
         if current_user != nil
