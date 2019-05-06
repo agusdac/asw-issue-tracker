@@ -1,6 +1,6 @@
 class IssuesController < ApplicationController
   before_action :set_issue, only: [:show, :edit, :update, :destroy]
-  
+  skip_before_action :verify_authenticity_token
   # GET /issues
   # GET /issues.json
   def index

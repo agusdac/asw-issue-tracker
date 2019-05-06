@@ -11,8 +11,9 @@ gem 'jbuilder',     '2.7.0'
 gem "omniauth-google-oauth2", "~> 0.2.1"
 gem "paperclip", "~> 6.0.0"
 gem 'bootstrap',    '4.3.1'
-gem 'aws-sdk', '3.0.1'
+gem 'rack-cors',    '0.3.1'
 
+gem 'aws-sdk', '3.0.1'
 
 group :development, :test do
   gem 'sqlite3', '1.3.13'
