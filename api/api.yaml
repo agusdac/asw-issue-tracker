@@ -17,101 +17,26 @@ servers:
 tags:
   - name: issue
     description: Everything about your Issues
-    externalDocs:
-      description: Find out more
-      url: 'http://swagger.io'
-  - name: store
-    description: Access to Petstore orders
   - name: user
     description: Operations about user
-    externalDocs:
-      description: Find out more about our store
-      url: 'http://swagger.io'
 paths:
-  /issues.jso:
+  /issues.json:
     get:
       tags:
         - issue
       summary: Get all issues
       description: Returns all issues
       operationId: getIssues
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Issue'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Issue'
-    put:
-      tags:
-        - issue
-      summary: Update an existing issue
-      operationId: updateIssue
-      requestBody:
-        description: Issue part to be updated
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Issue'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Issue'
-        required: true
-      responses:
-        '400':
-          description: Invalid ID supplied
-          content: {}
-        '404':
-          description: Issue not found
-          content: {}
-        '405':
-          description: Validation exception
-          content: {}
-      security:
-        - petstore_auth:
-            - 'write:pets'
-            - 'read:pets'
-    post:
-      tags:
-        - issue
-      summary: Add a new issue
-      operationId: addIssue
-      requestBody:
-        description: Issue object to be added
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Issue'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Issue'
-        required: true
-      responses:
-        '405':
-          description: Invalid input
-          content: {}
-  /issues.json:
-    get:
-      tags:
-        - issue
-      summary: Finds Issues by status
-      description: Multiple status values can be provided with comma separated strings
-      operationId: findIssueByStatus
       parameters:
         - name: status
           in: query
-          description: Status values that need to be considered for filter
+          description: Filters issues by status
           required: false
           style: form
-          explode: true
           schema:
             type: array
             items:
               type: string
-              default: available
               enum:
                 - new
                 - open
@@ -123,15 +48,13 @@ paths:
                 - closed
         - name: kind
           in: query
-          description: Kind values that need to be considered for filter
+          description: Filters issues by kind
           required: false
           style: form
-          explode: true
           schema:
             type: array
             items:
               type: string
-              default: available
               enum:
                 - bug
                 - enhancement
@@ -139,44 +62,81 @@ paths:
                 - task
         - name: priority
           in: query
-          description: Priority values that need to be considered for filter
+          description: Filters issues by priority
           required: false
           style: form
-          explode: true
           schema:
             type: array
             items:
               type: string
-              default: available
               enum:
                 - trivial
                 - minor
                 - major
                 - critical
                 - blocker
-              
+        - name: assignee_id
+          in: query
+          description: Filters issues by assignee id
+          required: false
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: Filters issues by assignee id
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - id
+                - kind
+                - priority
+                - assignee
+                - created_at
+                - updated_at
+        - name: dir
+          in: query
+          description: Direction of sorting (only select if sorting is selected)
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - down        
+                
       responses:
         '200':
           description: successful operation
           content:
             application/xml:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Issue'
+                $ref: '#/components/schemas/IssueIndex'
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Issue'
-        '400':
-          description: Invalid status value
+                $ref: '#/components/schemas/IssueIndex'
+    post:
+      tags:
+        - issue
+      summary: Add a new issue
+      operationId: addIssue
+      requestBody:
+        description: Issue object to be added
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueCreate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/IssueCreate'
+        required: true
+      responses:
+        '405':
+          description: Invalid input
           content: {}
-      security:
-        - petstore_auth:
-            - 'write:pets'
-            - 'read:pets'
-  '/issues/{id}.json':
+  /issues/{id}.json:
     get:
       tags:
         - issue
@@ -209,10 +169,53 @@ paths:
           content: {}
       security:
         - api_key: []
+    put:
+      tags:
+        - issue
+      summary: Edit an issue 
+      description: Edit an issue with a certain id
+      operationId: editIssueById
+      parameters:
+        - name: id
+          in: path
+          description: ID of issue to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Issue parameters to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueEdit'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/IssueEdit'
+        required: true 
+        
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Issue'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue'
+        '400':
+          description: Invalid ID supplied
+          content: {}
+        '404':
+          description: Issue not found
+          content: {}
+      security:
+        - api_key: []
   '/issues/{id}/votes.json':
     get:
       tags:
-        -votes
+        - votes
       summary: return number of votes from the issue specified by ID
       description: asdf
       operationId: asdf2
@@ -466,6 +469,103 @@ paths:
           content: {}
 components:
   schemas:
+    IssueEdit:
+      type: object
+      required:
+      - id
+      properties:
+        title:
+          type: string
+          example: "New issue title"
+        description:
+          type: string
+          example: "New issue description"
+        assignee_id:
+          type: integer
+          example: 1
+        kind:
+          type: string
+          enum:
+          - bug
+          - enhancement
+          - proposal
+          - task
+        priority:
+          type: string
+          enum:
+          - trivial
+          - minor
+          - major
+          - critical
+          - blocker
+        status: 
+          type: string
+          enum:
+          - new
+          - open
+          - on hold
+          - invalid
+          - duplicate
+          - resolved
+          - wontfix
+          - closed
+    IssueCreate:
+      type: object
+      required:
+      - id
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+          example: "New issue description..."
+        assignee_id:
+          type: integer
+          example: 1
+        kind:
+          type: string
+          enum:
+          - bug
+          - enhancement
+          - proposal
+          - task
+        priority:
+          type: string
+          enum:
+          - trivial
+          - minor
+          - major
+          - critical
+          - blocker
+    IssueIndex:
+      type: object
+      properties:
+        id:
+          type: integer
+        kind:
+          type: string
+        priority:
+          type: string
+        status:
+          type: string
+        votes:
+          type: integer
+        assignee:
+          type: string
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date
+          nullable: false
+        updated_at:
+          type: string
+          format: date
+          nullable: false
+        user_id:
+          type: integer
+        asignee_id:
+          type: integer
     Issue:
       type: object
       properties:
