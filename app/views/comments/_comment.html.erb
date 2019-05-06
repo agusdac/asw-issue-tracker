@@ -3,33 +3,34 @@
 <%= "Comment".pluralize(@comments.count) %> (<%= @comments.count %>)
 <br>
 <% @comments.each do |comment|%>
-<div class="container my-3">
-    <div class="row">
-        <div class="col-1">
-            <% if comment.has_attribute?(:user_id) and comment.user != nil %>
-                <img class="user-image" src ="<%=comment.user.imageurl%>">
-            <% end %>
-        </div>
+<div class="container">
+<div class="row">
+<div class="col-1">
+<% if comment.has_attribute?(:user_id) and comment.user != nil %>
+    <img class="perfil_image" src ="<%=comment.user.imageurl%>">
+<% end %>
+</div>
 
-        <div class="col-11">
-            <% if comment.has_attribute?(:user_id) and comment.user != nil %>
-            <span class="user-name"><%= @issue.user.name %> </span>
-            <% else %>
-                <b> !!!! ERROR ACTUALIZA EL PROYECTO O COMUNICATE CONMIGO !!!!: </b> 
-            <% end %>
+<div class="col-11">
+<% if comment.has_attribute?(:user_id) and comment.user != nil %>
+  <span class="user-name"><%= comment.user.name %> </span>
+<% else %>
+    <b> !!!! ERROR ACTUALIZA EL PROYECTO O COMUNICATE CONMIGO !!!!: </b> 
+<% end %>
 
-            <p class="not-bold"> <%= comment.content %></p>
-            <% if current_user == comment.user and current_user != nil%>
-                <%= link_to "Edit", edit_issue_comment_path(comment.issue, comment), :class=>"button-secondary not-bold"%>
-                •
-                <%= link_to "Delete", [comment.issue, comment], method: :delete, :class=>"button-secondary not-bold"%>
-                •
-                <span class="time-ago not-bold"><%= time_ago_in_words(comment.created_at)%></span>
-                <br>
-            <% else%>
-                <span class="time-ago not-bold"><%= time_ago_in_words(comment.created_at)%></span>
-            <% end%>
-        </div>
-    </div>
+ <span class="time-ago"><%= time_ago_in_words(comment.created_at)%></span>
+ <p> <%= comment.content %></p>
+ <p> <% if comment.file.present? %>
+
+    <%= link_to "Download attachment", comment.file.url(:original, false) %>
+ 
+  <%end%></p>
+<% if current_user == comment.user %>
+    <%= link_to "Edit", edit_issue_comment_path(comment.issue, comment)%>
+    <%= link_to "Delete", [comment.issue, comment], method: :delete%>
+    <br>
+<% end%>
+</div>
+</div>
 </div>
 <% end %>

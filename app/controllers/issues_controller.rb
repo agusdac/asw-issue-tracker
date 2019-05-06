@@ -62,6 +62,12 @@ class IssuesController < ApplicationController
     @issue = Issue.new(issue_params)
     @issue.status = "new";
     @issue.user_id = current_user.id;
+    
+    if @issue.file.present?
+      @comment = @issue.comments.new(content: "-- File attached", user_id: @issue.user.id)
+      @comment.save!
+      
+    end
     respond_to do |format|
       if @issue.save
         format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
@@ -100,6 +106,11 @@ class IssuesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def delAtt
+    @issue.file.destroy
+    @issue.save
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -109,6 +120,6 @@ class IssuesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def issue_params
-       params.require(:issue).permit(:title, :description, :kind, :priority, :status, :assignee_id, :created)
+       params.require(:issue).permit(:title, :description, :kind, :priority, :status, :assignee_id, :created, :file)
     end
 end
