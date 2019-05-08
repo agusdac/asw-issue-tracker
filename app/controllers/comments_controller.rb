@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
     # GET /issues/:issue_id/comments
     # GET /issues/:issue_id/comments.json
     def index
-        @comments = Comment.all
+        @comments = @issue.comments
     end
 
     # GET /issues/:issue_id/comments/:id
