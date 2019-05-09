@@ -2,18 +2,15 @@ openapi: 3.0.1
 info:
   title: Issue Tracker
   description: ASW Issue Tracker
-  contact:
-    email: apiteam@swagger.io
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   version: 1.0.0
 externalDocs:
-  description: Find out more about Swagger
-  url: 'http://swagger.io'
+  description: GitHub repository
+  url: 'https://github.com/agusdac/asw-issue-tracker'
 servers:
   - url: 'https://issue-tracker-asw-ruby.herokuapp.com/'
-  - url: 'http://petstore.swagger.io/v2'
 tags:
   - name: issue
     description: Everything about your Issues
@@ -283,143 +280,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Issue'
-    post:
-      tags:
-        - user
-      summary: Create user
-      description: This can only be done by the logged in user.
-      operationId: createUser
-      requestBody:
-        description: Created user object
-        content:
-          '*/*':
-            schema:
-              $ref: '#/components/schemas/User'
-        required: true
-      responses:
-        default:
-          description: successful operation
-          content: {}
-  /user/createWithArray:
-    post:
-      tags:
-        - user
-      summary: Creates list of users with given input array
-      operationId: createUsersWithArrayInput
-      requestBody:
-        description: List of user object
-        content:
-          '*/*':
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/User'
-        required: true
-      responses:
-        default:
-          description: successful operation
-          content: {}
-  /user/createWithList:
-    post:
-      tags:
-        - user
-      summary: Creates list of users with given input array
-      operationId: createUsersWithListInput
-      requestBody:
-        description: List of user object
-        content:
-          '*/*':
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/User'
-        required: true
-      responses:
-        default:
-          description: successful operation
-          content: {}
-  /user/login:
-    get:
-      tags:
-        - user
-      summary: Logs user into the system
-      operationId: loginUser
-      parameters:
-        - name: username
-          in: query
-          description: The user name for login
-          required: true
-          schema:
-            type: string
-        - name: password
-          in: query
-          description: The password for login in clear text
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          headers:
-            X-Rate-Limit:
-              description: calls per hour allowed by the user
-              schema:
-                type: integer
-                format: int32
-            X-Expires-After:
-              description: date in UTC when token expires
-              schema:
-                type: string
-                format: date-time
-          content:
-            application/xml:
-              schema:
-                type: string
-            application/json:
-              schema:
-                type: string
-        '400':
-          description: Invalid username/password supplied
-          content: {}
-  /user/logout:
-    get:
-      tags:
-        - user
-      summary: Logs out current logged in user session
-      operationId: logoutUser
-      responses:
-        default:
-          description: successful operation
-          content: {}
-  '/user/{username}':
-    get:
-      tags:
-        - user
-      summary: Get user by user name
-      operationId: getUserByName
-      parameters:
-        - name: username
-          in: path
-          description: 'The name that needs to be fetched. Use user1 for testing. '
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/User'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '400':
-          description: Invalid username supplied
-          content: {}
-        '404':
-          description: User not found
-          content: {}
     put:
       tags:
         - user
@@ -511,14 +371,15 @@ components:
           - closed
     IssueCreate:
       type: object
-      required:
-      - id
+     
       properties:
+        
         title:
           type: string
+          example: "Issue title..."
         description:
           type: string
-          example: "New issue description..."
+          example: "Issue description..."
         assignee_id:
           type: integer
           example: 1
