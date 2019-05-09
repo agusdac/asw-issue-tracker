@@ -89,9 +89,7 @@ class IssuesController < ApplicationController
   def update
     respond_to do |format|
       @user_aux = authenticate
-      if (@user_aux.nil?)
-        format.json { render json: @issue.errors, status: 403}
-      else
+      if (!@user_aux.nil? and @user_aux.id == @issue.user_id)
         if @issue.update(issue_params)
           if @issue.saved_changes.include?(:status)
             @comment = @issue.comments.new(content: "•   changed status to " + @issue.status, user_id: @issue.user.id)
@@ -103,6 +101,8 @@ class IssuesController < ApplicationController
           format.html { render :edit }
           format.json { render json: @issue.errors, status: :unprocessable_entity }
         end
+      else 
+        format.json { render json: @issue.errors, status: 403}
       end
     end
   end
