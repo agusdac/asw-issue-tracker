@@ -41,7 +41,7 @@ class VotesController < ApplicationController
   end
 
   def already_voted?
-  Vote.where(user_id: current_user.id, issue_id:
+  Vote.where(user_id: @user_aux.id, issue_id:
     params[:issue_id]).exists?
   end
 end
