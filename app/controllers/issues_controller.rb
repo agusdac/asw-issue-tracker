@@ -61,20 +61,25 @@ class IssuesController < ApplicationController
   def create
     @issue = Issue.new(issue_params)
     @issue.status = "new";
-    @issue.user_id = current_user.id;
     
-    if @issue.file.present?
-      @comment = @issue.comments.new(content: "-- File attached", user_id: @issue.user.id)
-      @comment.save!
-      
-    end
+     if @issue.file.present?
+        @comment = @issue.comments.new(content: "-- File attached", user_id: @issue.user.id)
+        @comment.save!
+     end
+     
     respond_to do |format|
-      if @issue.save
-        format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
-        format.json { render :show, status: :created, location: @issue }
+      @user_aux = authenticate
+      if (user_aux.nil?)
+        format.json { render json: @issue.errors, status: 403}
       else
-        format.html { render :new }
-        format.json { render json: @issue.errors, status: :unprocessable_entity }
+        @issue.user_id = @user_aux.id;
+        if @issue.save
+          format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
+          format.json { render :show, status: :created, location: @issue }
+        else
+          format.html { render :new }
+          format.json { render json: @issue.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -123,3 +128,4 @@ class IssuesController < ApplicationController
        params.require(:issue).permit(:title, :description, :kind, :priority, :status, :assignee_id, :created, :file)
     end
 end
+
