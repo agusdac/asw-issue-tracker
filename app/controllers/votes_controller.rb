@@ -4,7 +4,7 @@ class VotesController < ApplicationController
 
   def index
     @count_votes = @issue.votes.count
-    @votes = @issue.votes 
+    @votes = @issue.votes
   end
 
   def create

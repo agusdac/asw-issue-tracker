@@ -1,3 +1,4 @@
+json.countVotes @count_votes
 json.votes @votes do |vote|
     json.voteId vote.id
     json.issueId vote.issue_id
