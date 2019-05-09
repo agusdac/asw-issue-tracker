@@ -10,10 +10,10 @@
   <%= @user.email %>
 </p>
 
-<p>
+<% if current_user != nil && current_user.oauth_token == @user.oauth_token %> <p>
   <strong>Api Key:</strong>
   <%= @user.oauth_token %>
 </p>
+<% end %>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
