@@ -36,6 +36,7 @@ class CommentsController < ApplicationController
 
     def destroy
         @comment.destroy
+        redirect_to @issue, status: :see_other
     end
 
     def edit
