@@ -130,9 +130,14 @@ paths:
               $ref: '#/components/schemas/IssueCreate'
         required: true
       responses:
+        '403':
+          description: Permission denied, wrong authentification
+          content: {}
         '405':
           description: Invalid input
           content: {}
+      security:
+        - api_key: []
   /issues/{id}.json:
     get:
       tags:
@@ -164,8 +169,6 @@ paths:
         '404':
           description: Issue not found
           content: {}
-      security:
-        - api_key: []
     put:
       tags:
         - issue
@@ -371,9 +374,7 @@ components:
           - closed
     IssueCreate:
       type: object
-     
       properties:
-        
         title:
           type: string
           example: "Issue title..."
@@ -555,5 +556,5 @@ components:
             'read:pets': read your pets
     api_key:
       type: apiKey
-      name: api_key
+      name: tokenGoogle
       in: header
