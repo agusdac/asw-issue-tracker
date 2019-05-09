@@ -1,6 +1,7 @@
 class VotesController < ApplicationController
   before_action :find_issue
   before_action :find_vote, only: [:destroy]
+  skip_before_action :verify_authenticity_token
 
   def index
     @count_votes = @issue.votes.count
