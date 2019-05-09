@@ -8,11 +8,12 @@ class VotesController < ApplicationController
   end
 
   def create
-    if current_user != nil
+    @user_aux = authenticate
+    if user_aux != nil
       if already_voted?
         flash[:notice] = "You can't vote more than once"
       else
-        @issue.votes.create(user_id: current_user.id)
+        @issue.votes.create(user_id: user_aux.id)
       end
     else
       flash[:notice] = "Cannot vote if you're not logged in"
