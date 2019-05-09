@@ -23,6 +23,7 @@ class VotesController < ApplicationController
   end
 
   def destroy
+    @user_aux = authenticate
     if !(already_voted?)
       flash[:notice] = "Cannot unvote"
     else
