@@ -36,7 +36,6 @@ class CommentsController < ApplicationController
 
     def destroy
         @comment.destroy
-        redirect_to :root
     end
 
     def edit
