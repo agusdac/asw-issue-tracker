@@ -28,7 +28,7 @@ class VotesController < ApplicationController
     else
       @vote.destroy
     end
-    redirect_to issue_path(@issue)
+    redirect_to issue_path(@issue), status: :see_other
   end
 
   private
