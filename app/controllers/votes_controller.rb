@@ -2,6 +2,10 @@ class VotesController < ApplicationController
   before_action :find_issue
   before_action :find_vote, only: [:destroy]
 
+  def index
+    @count_votes = @issue.votes.count
+    @votes = @issue.votes 
+  end
 
   def create
     if current_user != nil
