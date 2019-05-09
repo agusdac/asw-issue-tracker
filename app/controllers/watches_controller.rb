@@ -1,13 +1,20 @@
 class WatchesController < ApplicationController
   before_action :find_issue
   before_action :find_watch, only: [:destroy]
+  skip_before_action :verify_authenticity_token
+
+  def index
+    @count_watches = @issue.watches.count
+    @watches = @issue.watches
+  end
 
   def create
-    if current_user != nil
+    @user_aux = authenticate
+    if @user_aux != nil
       if already_watched?
         flash[:notice] = "You can't watch more than once"
       else
-        @issue.watches.create(user_id: current_user.id)
+        @issue.watches.create(user_id: @user_aux.id)
         flash[:notice] = "You are now watching issue #{@issue.id}"
       end
     else
@@ -19,6 +26,7 @@ class WatchesController < ApplicationController
 
 
   def destroy
+    @user_aux = authenticate
     if !(already_watched?)
       flash[:notice] = "Cannot unwatch"
     else
@@ -39,7 +47,7 @@ class WatchesController < ApplicationController
 
 
   def already_watched?
-  Watch.where(user_id: current_user.id, issue_id:
+  Watch.where(user_id: @user_aux.id, issue_id:
     params[:issue_id]).exists?
   end
 
