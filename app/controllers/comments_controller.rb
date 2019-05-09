@@ -22,15 +22,15 @@ class CommentsController < ApplicationController
                 @comment = @issue.comments.create(params[:comment].permit(:content))
                 @comment.user_id = @user_aux.id
                 if @comment.save
-                    redirect_to @issue, status: :see_other
+                    redirect_to issue_path(@issue)
                 else
                     render 'new'
                 end
             else
-                redirect_to @issue, status: :see_other
+                redirect_to issue_path(@issue)
             end
         else
-            redirect_to @issue, notice: 'You must be logged in', status: :see_other
+            redirect_to @issue, notice: 'You must be logged in' 
         end
     end
 
@@ -44,7 +44,7 @@ class CommentsController < ApplicationController
 
     def update
         if @comment.update(params[:comment].permit(:content))
-            redirect_to issue_path(@issue)
+            redirect_to @issue, status: :see_other
         else 
             render 'edit'
         end
