@@ -36,7 +36,7 @@ class CommentsController < ApplicationController
 
     def destroy
         @comment.destroy
-        redirect_to issue_path(@issue)
+        redirect_to @issue
     end
 
     def edit
