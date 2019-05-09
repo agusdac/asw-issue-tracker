@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
     before_action :find_issue
     before_action :find_comment, only: [:destroy, :edit, :update, :comment_owner, :show]
     before_action :comment_owner, only: [:destroy, :edit, :update]
+    skip_before_action :verify_authenticity_token
     
     # GET /issues/:issue_id/comments
     # GET /issues/:issue_id/comments.json
