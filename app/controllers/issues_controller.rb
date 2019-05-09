@@ -88,20 +88,24 @@ class IssuesController < ApplicationController
   # PATCH/PUT /issues/1.json
   def update
     respond_to do |format|
-      if @issue.update(issue_params)
-        if @issue.saved_changes.include?(:status)
-          @comment = @issue.comments.new(content: "•   changed status to " + @issue.status, user_id: @issue.user.id)
-          @comment.save!
-        end
-        format.html { redirect_to @issue, notice: 'Issue was successfully updated.' }
-        format.json { render :show, status: :ok, location: @issue }
+      @user_aux = authenticate
+      if (user_aux.nil?)
+        format.json { render json: @issue.errors, status: 403}
       else
-        format.html { render :edit }
-        format.json { render json: @issue.errors, status: :unprocessable_entity }
+        if @issue.update(issue_params)
+          if @issue.saved_changes.include?(:status)
+            @comment = @issue.comments.new(content: "•   changed status to " + @issue.status, user_id: @issue.user.id)
+            @comment.save!
+          end
+          format.html { redirect_to @issue, notice: 'Issue was successfully updated.' }
+          format.json { render :show, status: :ok, location: @issue }
+        else
+          format.html { render :edit }
+          format.json { render json: @issue.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
-
   # DELETE /issues/1
   # DELETE /issues/1.json
   def destroy
