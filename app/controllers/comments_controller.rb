@@ -43,19 +43,10 @@ class CommentsController < ApplicationController
     end
 
     def update
-        @user_aux = authenticate
-        if @user_aux != nil
-            if !params[:comment][:content].blank?
-                if @comment.update(params[:comment].permit(:content))
-                    redirect_to issue_path(@issue)
-                else 
-                    render 'edit'
-                end
-            else
-                redirect_to issue_path(@issue)
-            end
-        else
-            redirect_to @issue, notice: 'You must be logged in' 
+        if @comment.update(params[:comment].permit(:content))
+            redirect_to issue_path(@issue)
+        else 
+            render 'edit'
         end
     end
 
@@ -70,7 +61,8 @@ class CommentsController < ApplicationController
     end
 
     def comment_owner
-        unless current_user.id == @comment.user_id
+        @user_aux = authenticate
+        unless @user_aux.id == @comment.user_id
             flash[:notice] = "You shall not pass!"
             redirect_to @issue
         end
