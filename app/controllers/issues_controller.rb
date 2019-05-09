@@ -69,7 +69,7 @@ class IssuesController < ApplicationController
      
     respond_to do |format|
       @user_aux = authenticate
-      if (user_aux.nil?)
+      if (@user_aux.nil?)
         format.json { render json: @issue.errors, status: 403}
       else
         @issue.user_id = @user_aux.id;
@@ -89,7 +89,7 @@ class IssuesController < ApplicationController
   def update
     respond_to do |format|
       @user_aux = authenticate
-      if (user_aux.nil?)
+      if (@user_aux.nil?)
         format.json { render json: @issue.errors, status: 403}
       else
         if @issue.update(issue_params)
