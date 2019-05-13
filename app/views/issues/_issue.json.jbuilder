@@ -4,8 +4,10 @@ json._links do
   end
   json.embedded do
     json.creator do
-      json.self do
-        json.href url_for(issue)
+      json._links do
+        json.self do
+          json.href url_for(issue)
+        end
       end
     end
   end
