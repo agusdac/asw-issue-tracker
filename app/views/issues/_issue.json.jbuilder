@@ -5,7 +5,7 @@ json._links do
   json.embedded do
     json.creator do
       json.self do
-        json.href url_for(issue)
+        json.href url_for(issue.user)
       end
     end
   end
