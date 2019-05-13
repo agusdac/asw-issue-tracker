@@ -73,7 +73,6 @@ class IssuesController < ApplicationController
         format.json { render json: @issue.errors, status: 403}
       else
         @issue.user_id = @user_aux.id;
-        @issue.creator = "/users/"+@user_aux.id;
         if @issue.save
           format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
           format.json { render :show, status: :created, location: @issue }
@@ -130,7 +129,7 @@ class IssuesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def issue_params
-       params.require(:issue).permit(:title, :description, :kind, :priority, :status, :assignee_id, :creator, :file)
+       params.require(:issue).permit(:title, :description, :kind, :priority, :status, :assignee_id, :file)
     end
 end
 
