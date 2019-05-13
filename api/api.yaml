@@ -279,57 +279,41 @@ paths:
           content:
             application/xml:
               schema:
-                $ref: '#/components/schemas/Issue'
+                $ref: '#/components/schemas/User'
             application/json:
               schema:
-                $ref: '#/components/schemas/Issue'
-    put:
+                $ref: '#/components/schemas/User'
+  /users/{id}.json:
+    get:
       tags:
         - user
-      summary: Updated user
-      description: This can only be done by the logged in user.
-      operationId: updateUser
+      summary: Find user by ID
+      description: Returns a single user
+      operationId: getUserById
       parameters:
-        - name: username
+        - name: id
           in: path
-          description: name that need to be updated
+          description: ID of user to return
           required: true
           schema:
-            type: string
-      requestBody:
-        description: Updated user object
-        content:
-          '*/*':
-            schema:
-              $ref: '#/components/schemas/User'
-        required: true
+            type: integer
+            format: int64
       responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         '400':
-          description: Invalid user supplied
+          description: Invalid ID supplied
           content: {}
         '404':
           description: User not found
-          content: {}
-    delete:
-      tags:
-        - user
-      summary: Delete user
-      description: This can only be done by the logged in user.
-      operationId: deleteUser
-      parameters:
-        - name: username
-          in: path
-          description: The name that needs to be deleted
-          required: true
-          schema:
-            type: string
-      responses:
-        '400':
-          description: Invalid username supplied
-          content: {}
-        '404':
-          description: User not found
-          content: {}
+          content: {}  
 components:
   schemas:
     IssueEdit:
