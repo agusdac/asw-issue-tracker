@@ -13,6 +13,13 @@ json._links do
         end
       end
     end
+    json.comments do
+      json._links do
+        json.self do
+          json.href url_for(issue) + "/comments
+        end
+      end
+    end
   end
 end
 
