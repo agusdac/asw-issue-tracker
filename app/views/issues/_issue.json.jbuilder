@@ -16,7 +16,7 @@ json._links do
     json.comments do
       json._links do
         json.self do
-          json.href url_for(issue) + "/comments
+          json.href url_for(issue) + "/comments"
         end
       end
     end
