@@ -5,7 +5,7 @@ json.comments @comments do |comment|
     json.createdAt comment.created_at
     json._links do
         json.self do
-            json.href url_for(issue) + "/comments"
+            json.href url_for(comment.issue) + "/comments"
         end
         json.embedded do
             json.creator do
