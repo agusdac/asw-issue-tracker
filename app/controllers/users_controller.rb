@@ -5,10 +5,10 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
       
-    if not params[:token].present?
-        @users = User.all
+    if params[:token].present?
+        @users = User.where(uid: [params[:token]])
     else
-        @user = User.where(oauth_token: [params[:token]])
+        @users = User.select("name, id, email, imageurl, uid")
     end
 
   end
