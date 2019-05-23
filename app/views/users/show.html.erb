@@ -10,9 +10,9 @@
   <%= @user.email %>
 </p>
 
-<% if current_user != nil && current_user.oauth_token == @user.oauth_token %> <p>
+<% if current_user != nil && current_user.uid == @user.uid %> <p>
   <strong>Api Key:</strong>
-  <%= @user.oauth_token %>
+  <%= @user.uid %>
 </p>
 <% end %>
 

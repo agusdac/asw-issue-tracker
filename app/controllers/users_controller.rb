@@ -4,7 +4,13 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+      
+    if not params[:token].present?
+        @users = User.all
+    else
+        @user = User.where(oauth_token: [params[:token]])
+    end
+
   end
 
   # GET /users/1
