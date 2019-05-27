@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
   	tokenGoogle = request.headers['tokenGoogle']
   	if(tokenGoogle)
   	  @user = User.where(oauth_token: tokenGoogle).first
-      format.json { render :show, location: @user }
   	else
   	  @user = current_user
   	end
