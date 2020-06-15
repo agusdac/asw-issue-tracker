@@ -103,7 +103,7 @@ tr:hover {
     text-decoration: none;
     text-transform: uppercase;
     cursor: pointer;
-    background-color: #fff;
+    background-color: transparent;
 }
 
 #status-prueba-span {

@@ -1,0 +1,812 @@
+openapi: 3.0.1
+info:
+  title: Issue Tracker
+  description: ASW Issue Tracker
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+externalDocs:
+  description: GitHub repository
+  url: 'https://github.com/agusdac/asw-issue-tracker'
+servers:
+  - url: 'https://issue-tracker-asw-ruby.herokuapp.com/'
+tags:
+  - name: Issue
+    description: Everything about your Issues
+  - name: User
+    description: Operations about user
+  - name: Comments
+    description: Operations about comments
+  - name: Votes
+    description: Operations about votes
+  - name: Watches
+    description: Operations about watches
+  - name: Attachments
+    description: Operations about attachments
+paths:
+  /issues.json:
+    get:
+      tags:
+        - Issue
+      summary: Get all issues
+      description: Returns all issues
+      operationId: getIssues
+      parameters:
+        - name: status
+          in: query
+          description: Filters issues by status
+          required: false
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - new
+                - open
+                - on hold
+                - invalid
+                - duplicate
+                - resolved
+                - wontfix
+                - closed
+        - name: kind
+          in: query
+          description: Filters issues by kind
+          required: false
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - bug
+                - enhancement
+                - proposal
+                - task
+        - name: priority
+          in: query
+          description: Filters issues by priority
+          required: false
+          style: form
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - trivial
+                - minor
+                - major
+                - critical
+                - blocker
+        - name: assignee_id
+          in: query
+          description: Filters issues by assignee id
+          required: false
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: Filters issues by assignee id
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - id
+                - kind
+                - priority
+                - assignee
+                - created_at
+                - updated_at
+        - name: dir
+          in: query
+          description: Direction of sorting (only select if sorting is selected)
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - down        
+                
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/IssueIndex'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueIndex'
+    post:
+      tags:
+        - Issue
+      summary: Add a new issue
+      operationId: addIssue
+      requestBody:
+        description: Issue object to be added
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueCreate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/IssueCreate'
+        required: true
+      responses:
+        '403':
+          description: Permission denied, wrong authentification
+          content: {}
+        '405':
+          description: Invalid input
+          content: {}
+      security:
+        - api_key: []
+  /issues/{id}.json:
+    get:
+      tags:
+        - Issue
+      summary: Find issue by ID
+      description: Returns a single issue
+      operationId: getIssueById
+      parameters:
+        - name: id
+          in: path
+          description: ID of issue to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Issue'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue'
+        '400':
+          description: Invalid ID supplied
+          content: {}
+        '404':
+          description: Issue not found
+          content: {}
+    put:
+      tags:
+        - Issue
+      summary: Edit an issue 
+      description: Edit an issue with a certain id
+      operationId: editIssueById
+      parameters:
+        - name: id
+          in: path
+          description: ID of issue to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Issue parameters to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueEdit'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/IssueEdit'
+        required: true 
+        
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Issue'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue'
+        '400':
+          description: Invalid ID supplied
+          content: {}
+        '404':
+          description: Issue not found
+          content: {}
+      security:
+        - api_key: []
+  '/issues/{id}/comments.json':
+    get:
+      tags:
+        - Comments
+      summary: Returns comments from the issue specified by ID
+      description: Returns comments from the issue specified by ID
+      operationId: getComments
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue to return its comments
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+    post:
+      tags:
+        - Comments
+      summary: Creates new comment
+      description: Creates new comment
+      operationId: createComment
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue to create a new comment
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Issue object to be added
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentMod'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/CommentMod'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+      security:
+        - api_key: []
+  '/issues/{issueId}/comments/{commentId}.json':
+    put:
+      tags:
+        - Comments
+      summary: Edit comment
+      description: Edits the comment specified by commentId from the issue specified by issueId
+      operationId: editComment
+      parameters:
+        - name: issueId
+          in: path
+          description: ID of the issue to return its comments
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: commentId
+          in: path
+          description: ID of the comment to edit
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Issue object to be added
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentMod'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/CommentMod'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+      security:
+        - api_key: []
+    delete:
+      tags:
+        - Comments
+      summary: Delete comment
+      description: Deletes the comment specified by commentId from the issue specified by issueId
+      operationId: deleteComment
+      parameters:
+        - name: issueId
+          in: path
+          description: ID of the issue to return its comments
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: commentId
+          in: path
+          description: ID of the comment to edit
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+      security:
+        - api_key: []
+  '/issues/{id}/votes.json':
+    get:
+      tags:
+        - Votes
+      summary: Gets all votes
+      description: return number of votes from the issue specified by ID
+      operationId: getVotes
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue to return its votes
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+    post:
+      tags:
+        - Votes
+      summary: Votes an issue
+      description: Votes an issue
+      operationId: createVote
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue to return its votes
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+      security:
+        - api_key: []
+  '/issues/{issueId}/votes/{voteId}.json':
+    delete:
+      tags:
+        - Votes
+      summary: Remove vote
+      description: Removes the vote specified by voteId from the issue specified by issueId
+      operationId: removeVotes
+      parameters:
+        - name: issueId
+          in: path
+          description: ID of the issue to return its votes
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: voteId
+          in: path
+          description: ID of the issue to return its votes
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+      security:
+        - api_key: []
+  '/issues/{id}/watches.json':
+    get:
+      tags:
+        - Watches
+      summary: Gets all watches
+      description: return number of watches from the issue specified by ID
+      operationId: getWatches
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue to return its watches
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+    post:
+      tags:
+        - Watches
+      summary: Watches an issue
+      description: Watches an issue
+      operationId: createWatch
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue to return its votes
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+      security:
+        - api_key: []
+  '/issues/{issueId}/watches/{watchId}.json':
+    delete:
+      tags:
+        - Watches
+      summary: Remove watch
+      description: Removes the watch specified by voteId from the issue specified by issueId
+      operationId: removeWatches
+      parameters:
+        - name: issueId
+          in: path
+          description: ID of the issue to return its votes
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: watchId
+          in: path
+          description: ID of the issue to return its votes
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+      security:
+        - api_key: []
+  /users.json:
+    get:
+      tags:
+        - User
+      summary: get users
+      description: This can only be done by the logged in user.
+      operationId: getUsers
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/{id}.json:
+    get:
+      tags:
+        - User
+      summary: Find user by ID
+      description: Returns a single user
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          description: ID of user to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid ID supplied
+          content: {}
+        '404':
+          description: User not found
+          content: {}  
+components:
+  schemas:
+    IssueEdit:
+      type: object
+      required:
+      - id
+      properties:
+        title:
+          type: string
+          example: "New issue title"
+        description:
+          type: string
+          example: "New issue description"
+        assignee_id:
+          type: integer
+          example: 1
+        kind:
+          type: string
+          enum:
+          - bug
+          - enhancement
+          - proposal
+          - task
+        priority:
+          type: string
+          enum:
+          - trivial
+          - minor
+          - major
+          - critical
+          - blocker
+        status: 
+          type: string
+          enum:
+          - new
+          - open
+          - on hold
+          - invalid
+          - duplicate
+          - resolved
+          - wontfix
+          - closed
+    IssueCreate:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Issue title..."
+        description:
+          type: string
+          example: "Issue description..."
+        assignee_id:
+          type: integer
+          example: 1
+        kind:
+          type: string
+          enum:
+          - bug
+          - enhancement
+          - proposal
+          - task
+        priority:
+          type: string
+          enum:
+          - trivial
+          - minor
+          - major
+          - critical
+          - blocker
+    IssueIndex:
+      type: object
+      properties:
+        id:
+          type: integer
+        kind:
+          type: string
+        priority:
+          type: string
+        status:
+          type: string
+        votes:
+          type: integer
+        assignee:
+          type: string
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date
+          nullable: false
+        updated_at:
+          type: string
+          format: date
+          nullable: false
+        user_id:
+          type: integer
+        asignee_id:
+          type: integer
+    Issue:
+      type: object
+      properties:
+        id:
+          type: integer
+        kind:
+          type: string
+        priority:
+          type: string
+        status:
+          type: string
+        assignee:
+          type: string
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date
+          nullable: false
+        updated_at:
+          type: string
+          format: date
+          nullable: false
+        user_id:
+          type: integer
+        asignee_id:
+          type: integer
+      xml:
+        name: Issue
+    CommentMod:
+      type: object
+      properties:
+        content:
+          type: string
+      xml:
+        name: Comment
+    Comment:
+      type: object
+      properties:
+        content:
+          type: string
+        issue_id:
+          type: integer
+        user_id:
+          type: integer
+        created_at:
+          type: string
+          format: ''
+          nullable: false
+        updated_at:
+          type: string
+          format: ''
+          nullable: false
+      xml:
+        name: Comment
+    User:
+      type: object
+      properties:
+        provider:
+          type: string
+        uid:
+          type: string
+        name:
+          type: string
+        imageurl:
+          type: string
+        created_at:
+          type: string
+          format: date
+          nullable: false
+        updated_at:
+          type: string
+          format: date
+          nullable: false
+        oauth_token:
+          type: string
+        oauth_expires_at:
+          type: string
+      xml:
+        name: User
+    Vote:
+      type: object
+      properties:
+        issue_id:
+          type: integer
+        user_id:
+          type: integer
+        created_at:
+          type: string
+          format: ''
+          nullable: false
+        updated_at:
+          type: string
+          format: ''
+          nullable: false
+      xml:
+        name: Vote
+    Watch:
+      type: object
+      properties:
+        issue_id:
+          type: integer
+        user_id:
+          type: integer
+        created_at:
+          type: string
+          format: ''
+          nullable: false
+        updated_at:
+          type: string
+          format: ''
+          nullable: false
+      xml:
+        name: Watch
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'http://petstore.swagger.io/oauth/dialog'
+          scopes:
+            'write:pets': modify pets in your account
+            'read:pets': read your pets
+    api_key:
+      type: apiKey
+      name: tokenGoogle
+      in: header

@@ -1,118 +1,120 @@
 
-<div class="container">
-<p id="notice"><%= notice %></p>
-
-<div class="row">
-<div class="col-8">
-  <span class="issue-title"><%= @issue.title %></span>
-  <br>
-  
-  <span>Issue #<% @issue.id %></span>
-<br>
+<div class="container mx-auto">
+  <p id="notice"><%= notice %></p>
 
 
 
-<div class="container">
-<div class="row">
-<div class="col-1">
-<img class="perfil_image" src ="<%=@issue.user.imageurl%>">
-</div>
+  <div class="row">
+    <div class="col-8">
+      <span class="issue-title"><%= @issue.title %></span>
+      <br>
+      <span>Issue #<%= @issue.id %></span>
+      <span class="title-status"><%= @issue.status %></span>
+      <br>
+      <div class="container my-4">
+        <div class="row">
+          <div class="col-1">
+            <img class="user-image" src ="<%=@issue.user.imageurl%>">
+          </div>
 
-<div class="col-11">
-  <span class="user-name"><%= @issue.user.name %> </span>
-  created an issue 
-  <span class="time-ago"><%= time_ago_in_words(@issue.created_at)%></span>
-  <br>
-  <%= @issue.description %>
-</div>
-</div>
-</div>
 
-<div>
-  <% if @issue.file.present? %>
+          <div class="col-11">
+            <span class="user-name"><%= @issue.user.name %> </span>
+            <span class="not-bold">created an issue </span>
+            <span class="time-ago not-bold"><%= time_ago_in_words(@issue.created_at)%></span>
+            <% if @issue.description.blank? %>
+              <p class="not-bold my-2">No description provided.</p>
+            <% else %>
+              <p class="not-bold my-2"><%= @issue.description %></p>
+            <% end %>
+            <div>
+              <% if @issue.file.present? %>
+                <%= link_to "Download attachment", @issue.file.url(:original, false) %>
+              <%end%>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <%= link_to "Download attachment", @issue.file.url(:original, false) %>
- 
-  <%end%>
- </div>
+      <hr>
+      <%= render 'comments/comment'%>
+      <br>
+      <%= render 'comments/form'%>
+    </div>
 
-<hr>
+    <div class="col-4 my-5">
+      <% if @issue.user == current_user %>
+        <%= link_to 'Edit', edit_issue_path(@issue), :class => "button-primary2 "%>
 
-<%= render 'comments/comment'%>
-<br>
-<%= render 'comments/form'%>
-
-</div>
-
-<div class="col-4">
-
-<%= link_to 'Edit', edit_issue_path(@issue) %> |
-<%= link_to 'Back', issues_path %>
-<div class="issue-attrs">
-<table class="table table-sm">
-  <tbody>
-    <tr>
-      <th scope="row">Asignee</th>
-      <td>
-      <% if @issue.assignee.present? %>
-        <%= @issue.assignee.name %>
-      <% else %>
-        &ndash; 
       <% end %>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">Type</th>
-      <td>
-      <%= @issue.kind %>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">Priority</th>
-      <td>
-      <%= @issue.priority %>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">Status</th>
-      <td>
-      <%= @issue.status %>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">Votes</th>
-      <td>
-      <%= @issue.votes.count %>
-      
-      <% if current_user %>
-        <% pre_vote = @issue.votes.find { |vote| vote.user_id == current_user.id} %>  
-                     <% if pre_vote %>
-                      <%= button_to 'Unvote', issue_vote_path(@issue, pre_vote), method: :delete %>
-                    <% else %>
-                      <%= button_to 'Vote', issue_votes_path(@issue), method: :post %>
-                    <% end %>
-                    <% end %>
-
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">Watchers</th>
-      <td>
-                <%= @issue.watches.count %>
-
-      <% if current_user %>
- <% pre_watch = @issue.watches.find { |watch| watch.user_id == current_user.id} %>
-    <% if pre_watch %>
-      <%= button_to 'Unwatch', issue_watch_path(@issue, pre_watch), method: :delete %>
-    <% else %>
-      <%= button_to 'Watch', issue_watches_path(@issue), method: :post %>
-  <% end %>
-                    <% end %>
-      </td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-</div>
+      <div class="issue-attrs">
+      <table class="table table-sm">
+        <tbody>
+          <tr class="noHover">
+            <th scope="row">Asignee</th>
+            <td>
+            <% if @issue.assignee.present? %>
+              <%= @issue.assignee.name %>
+            <% else %>
+              &ndash; 
+            <% end %>
+            </td>
+          </tr>
+          <tr class="noHover">
+            <th scope="row">Type</th>
+            <td>
+            <%= @issue.kind %>
+            </td>
+          </tr>
+          <tr class="noHover">
+            <th scope="row">Priority</th>
+            <td>
+            <%= @issue.priority %>
+            </td>
+          </tr>
+          <tr class="noHover">
+            <th scope="row">Status</th>
+            <td>
+            <%= @issue.status %>
+            </td>
+          </tr>
+          <tr class="noHover">
+            <th scope="row">Votes</th>
+            <td>
+            <% if current_user %>
+              <% pre_vote = @issue.votes.find { |vote| vote.user_id == current_user.id} %>  
+              <% if pre_vote %>
+                <span class="counter-active"><%= @issue.votes.count %></span>
+                <%= link_to 'Remove vote', issue_vote_path(@issue, pre_vote), method: :delete , :class => "link-secondary"%>
+              <% else %>
+                <span class="counter-inactive"><%= @issue.votes.count %></span>
+                <%= link_to 'Vote for this issue', issue_votes_path(@issue), method: :post , :class => "link-secondary"%>
+              <% end %>
+            <% else %>
+              <span class="counter-inactive"><%= @issue.votes.count %></span>
+            <% end %>
+            </td>
+          </tr>
+          <tr class="noHover">
+            <th scope="row">Watchers</th>
+            <td>
+              <% if current_user %>
+                <% pre_watch = @issue.watches.find { |watch| watch.user_id == current_user.id} %>
+                <% if pre_watch %>
+                  <span class="counter-active"><%= @issue.watches.count %></span>
+                  <%= link_to 'Stop watching', issue_watch_path(@issue, pre_watch), method: :delete, :class => "link-secondary" %>
+                <% else %>
+                  <span class="counter-inactive"><%= @issue.watches.count %></span>
+                  <%= link_to 'Watch this issue', issue_watches_path(@issue), method: :post, :class => "link-secondary" %>
+                <% end %>
+              <% else %>
+                <span class="counter-inactive"><%= @issue.watches.count %></span>
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
 </div>

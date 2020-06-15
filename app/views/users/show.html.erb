@@ -10,5 +10,10 @@
   <%= @user.email %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
+<% if current_user != nil && current_user.uid == @user.uid %> <p>
+  <strong>Api Key:</strong>
+  <%= @user.uid %>
+</p>
+<% end %>
+
 <%= link_to 'Back', users_path %>

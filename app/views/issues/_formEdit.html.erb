@@ -10,52 +10,124 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
+<div class="container">
+    <div class="row">
+      <div class="col-2">
+        <div class="field not-bold text-right">
     <%= form.label :title %>
-    <%= form.text_field :title, id: :issue_title %>
-  </div>
-  
-  <div class="field">
+        </div>
+      </div>
+
+      <div class="col-5">
+        <div class="field">
+    <%= form.text_field :title, id: :issue_title, class: 'form-control'  %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-2">
+        <div class="field not-bold text-right">
     <%= form.label :description %>
-    <%= form.text_area :description, id: :issue_description %>
-  </div>
+        </div>
+      </div>
 
+      <div class="col-5">
+        <div class="field">
+    <%= form.text_area :description, id: :issue_description, class: 'form-control'  %>
+        </div>
+      </div>
+    </div>
   
-  <div class="field">
+    <div class="row">
+      <div class="col-2">
+        <div class="field not-bold text-right">
     <%= form.label :status %>
-    <%= form.select :status, [['open'],['on hold'],['resolved'],['duplicate'],['invalid'],['wontfix'],['closed']], default: @issue.status %>
-    <%= form.submit 'Change status' %>
-  </div>
-   
-  
-  <div class="field">
+        </div>
+      </div>
+
+      <div class="col-5">
+        <div class="field">
+    <%= form.select :status, [['open'],['on hold'],['resolved'],['duplicate'],['invalid'],['wontfix'],['closed']], default: @issue.status, class: 'form-control'  %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-2">
+        <div class="field not-bold text-right">
     <%= form.label :kind %>
-    <%= form.select :kind, [['bug'],['enhancement'],['proposal'],['task']] %>
-  </div>
+        </div>
+      </div>
 
-  <div class="field">
+      <div class="col-5">
+        <div class="field">
+    <%= form.select :kind, [['bug'],['enhancement'],['proposal'],['task']], class: 'form-control'  %>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-2">
+        <div class="field not-bold text-right">
     <%= form.label :priority %>
-    <%= form.select :priority, [['trivial'],['minor'],['major'],['critical'],['blocker']] %>
-  </div>
+        </div>
+      </div>
 
-  <div class="field">
+      <div class="col-5">
+        <div class="field">
+    <%= form.select :priority, [['trivial'],['minor'],['major'],['critical'],['blocker']], class: 'form-control'  %>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-2">
+        <div class="field not-bold text-right">
     <%= form.label :assignee %>
-    <%= form.collection_select :assignee_id, User.order(:name),:id,:name, include_blank: true %>
-  </div>
-  
-  <div>
-  <% if @issue.file.present? %>
-    <!-- %= button_to 'Delete attachment', issue_delAtt_path, method: :post %-->
-  <%else%>
+        </div>
+      </div>
+
+      <div class="col-5">
+        <div class="field">
+    <%= form.collection_select :assignee_id, User.order(:name),:id,:name, include_blank: true , class: 'form-control' %>
+        </div>
+      </div>
+    </div>
       
-    <!-- Other fields go here... -->
-    <%= form.label :file, "File" %>
-    <%= form.file_field :file %>
-  <%end%>
-  </div>
-  
-  <div class="actions">
-    <%= form.submit %>
+    <div>
+      <% if @issue.file.present? %>
+        <!-- %= button_to 'Delete attachment', issue_delAtt_path, method: :post %-->
+      <%else%>
+        <!-- Other fields go here... -->
+
+    <div class="row">
+      <div class="col-2">
+        <div class="field not-bold text-right">
+        <%= form.label :file, "File" %>
+        </div>
+      </div>
+
+      <div class="col-5">
+        <div class="field">
+        <%= form.file_field :file, class: 'form-control-file' %>
+        </div>
+      </div>
+    </div>
+      <%end%>
+     </div>
+
+     <div class="row justify-content-end">
+        <div class="actions">
+          <span class="mx-3"><%= form.submit :class =>'button-primary' %></span>
+        </div>
+        <span class="mx-3 no-bold">
+<%= link_to 'Cancel', @issue, class: 'link-secondary not-bold align-middle' %></span>
+    </div>
+
+
   </div>
 <% end %>

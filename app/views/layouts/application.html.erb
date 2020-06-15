@@ -12,7 +12,7 @@
 	<div class="sidebar">
 	  <%= link_to 'Home', issues_path, :class=>"active" %>
 	  <% if current_user %>
-          <img class="perfil_image" src ="<%=current_user.imageurl%>">
+          <%= link_to (image_tag(current_user.imageurl, :class => "perfil_image")), 'users/'+current_user.id.to_s%>
           <p id="perfil_name">Signed in as <strong><%= current_user.name %></p>
           
           <%= link_to "Sign out", signout_path, id: "sign_out" %>

@@ -1,14 +1,20 @@
 class VotesController < ApplicationController
   before_action :find_issue
   before_action :find_vote, only: [:destroy]
+  skip_before_action :verify_authenticity_token
 
+  def index
+    @count_votes = @issue.votes.count
+    @votes = @issue.votes
+  end
 
   def create
-    if current_user != nil
+    @user_aux = authenticate
+    if @user_aux != nil
       if already_voted?
         flash[:notice] = "You can't vote more than once"
       else
-        @issue.votes.create(user_id: current_user.id)
+        @issue.votes.create(user_id: @user_aux.id)
       end
     else
       flash[:notice] = "Cannot vote if you're not logged in"
@@ -17,12 +23,13 @@ class VotesController < ApplicationController
   end
 
   def destroy
+    @user_aux = authenticate
     if !(already_voted?)
       flash[:notice] = "Cannot unvote"
     else
       @vote.destroy
     end
-    redirect_to issue_path(@issue)
+    redirect_to issue_path(@issue), status: :see_other
   end
 
   private
@@ -35,7 +42,7 @@ class VotesController < ApplicationController
   end
 
   def already_voted?
-  Vote.where(user_id: current_user.id, issue_id:
+  Vote.where(user_id: @user_aux.id, issue_id:
     params[:issue_id]).exists?
   end
 end

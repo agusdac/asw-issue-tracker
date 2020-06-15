@@ -1,6 +1,6 @@
 class IssuesController < ApplicationController
   before_action :set_issue, only: [:show, :edit, :update, :destroy]
-  
+  skip_before_action :verify_authenticity_token
   # GET /issues
   # GET /issues.json
   def index
@@ -61,20 +61,25 @@ class IssuesController < ApplicationController
   def create
     @issue = Issue.new(issue_params)
     @issue.status = "new";
-    @issue.user_id = current_user.id;
     
-    if @issue.file.present?
-      @comment = @issue.comments.new(content: "-- File attached", user_id: @issue.user.id)
-      @comment.save!
-      
-    end
+     if @issue.file.present?
+        @comment = @issue.comments.new(content: "-- File attached", user_id: @issue.user.id)
+        @comment.save!
+     end
+     
     respond_to do |format|
-      if @issue.save
-        format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
-        format.json { render :show, status: :created, location: @issue }
+      @user_aux = authenticate
+      if (@user_aux.nil?)
+        format.json { render json: @issue.errors, status: 403}
       else
-        format.html { render :new }
-        format.json { render json: @issue.errors, status: :unprocessable_entity }
+        @issue.user_id = @user_aux.id;
+        if @issue.save
+          format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
+          format.json { render :show, status: :created, location: @issue }
+        else
+          format.html { render :new }
+          format.json { render json: @issue.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -83,20 +88,24 @@ class IssuesController < ApplicationController
   # PATCH/PUT /issues/1.json
   def update
     respond_to do |format|
-      if @issue.update(issue_params)
-        if @issue.saved_changes.include?(:status)
-          @comment = @issue.comments.new(content: "changed status to " + @issue.status, user_id: @issue.user.id)
-          @comment.save!
+      @user_aux = authenticate
+      if (!@user_aux.nil? and @user_aux.id == @issue.user_id)
+        if @issue.update(issue_params)
+          if @issue.saved_changes.include?(:status)
+            @comment = @issue.comments.new(content: "•   changed status to " + @issue.status, user_id: @issue.user.id)
+            @comment.save!
+          end
+          format.html { redirect_to @issue, notice: 'Issue was successfully updated.' }
+          format.json { render :show, status: :ok, location: @issue }
+        else
+          format.html { render :edit }
+          format.json { render json: @issue.errors, status: :unprocessable_entity }
         end
-        format.html { redirect_to @issue, notice: 'Issue was successfully updated.' }
-        format.json { render :show, status: :ok, location: @issue }
-      else
-        format.html { render :edit }
-        format.json { render json: @issue.errors, status: :unprocessable_entity }
+      else 
+        format.json { render json: @issue.errors, status: 403}
       end
     end
   end
-
   # DELETE /issues/1
   # DELETE /issues/1.json
   def destroy
@@ -120,6 +129,7 @@ class IssuesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def issue_params
-       params.require(:issue).permit(:title, :description, :kind, :priority, :status, :assignee_id, :created, :file)
+       params.require(:issue).permit(:title, :description, :kind, :priority, :status, :assignee_id, :file)
     end
 end
+

@@ -13,7 +13,7 @@
 
 <div class="col-11">
 <% if comment.has_attribute?(:user_id) and comment.user != nil %>
-  <span class="user-name"><%= @issue.user.name %> </span>
+  <span class="user-name"><%= comment.user.name %> </span>
 <% else %>
     <b> !!!! ERROR ACTUALIZA EL PROYECTO O COMUNICATE CONMIGO !!!!: </b> 
 <% end %>
